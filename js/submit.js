@@ -21,16 +21,16 @@ $(document).ready(function(){
 					document.getElementById("Incorrect").style.display = "block";
 				}
 				else if(data == 'Admin'){
-					window.location = "http://localhost:81/softeng/admin/index.php";
+					window.location = "admin/index.php";
 				}
 				else if(data == 'Student'){
-					window.location = "http://localhost:81/softeng/student/index.php";
+					window.location = "student/index.php";
 				}
 				else if(data == 'Prof'){
-					window.location = "http://localhost:81/softeng/instructor/index.php";
+					window.location = "instructor/index.php";
 				}
 				else{
-					location.reload();
+					window.location = "logout.php";
 				}
 			});
 		}
