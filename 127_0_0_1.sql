@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2016 at 11:22 AM
--- Server version: 10.1.8-MariaDB
--- PHP Version: 5.6.14
+-- Generation Time: Mar 13, 2016 at 02:42 PM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,15 +35,6 @@ CREATE TABLE `enrollment` (
   `Subjects` varchar(255) NOT NULL,
   `Grade` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `enrollment`
---
-
-INSERT INTO `enrollment` (`ID`, `SID`, `Term`, `Subjects`, `Grade`) VALUES
-(1, 201501280, 1, 'FIL1,ENG1,MATH1,INTROIT,PROG,EUTH,PE1', '85,88,87,95,84,P,86'),
-(2, 201501280, 2, 'FIL2,ENG2,MATH2,PROG1,LOGIDES,NSTP1,PE2', '94,85,88,95,80,P,86'),
-(3, 201501280, 3, 'ARTAP,ENG3,MATH3,PROG2,DATSTRUCT,NSTP2,PE3', '78,82,85,95,92,P,88');
 
 -- --------------------------------------------------------
 
@@ -127,23 +118,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`ID`, `email`, `Type`, `Password`) VALUES
-(201501280, 'brays.420@gmail.com', 'Student', '123123'),
-(201501281, 'male@student', 'Student', '123123'),
-(201501282, 'female@student', 'Student', '123123'),
-(2012479131, 'brays_420@yahoo.com', 'Admin', '123123'),
-(2016000001, 'ana.albano05@gmail.com', 'Guest', 'Woodcar371'),
-(2016000002, 'cleavantsarte40@gmail.com', 'Guest', 'darkangel09'),
-(2016000003, 'guino.john@gmail.com', 'Guest', '123456'),
-(2016000004, 'gio.lagasca03@gmail.com', 'Guest', '2442413'),
-(2016000005, 'brays420@gmail.com', 'Guest', '123123'),
-(2016000006, 'bryce27923@gmail.com', 'Prof', '123123'),
-(2016000007, 'bry@bry', 'Prof', ''),
-(2016000008, 'yuri@dog', 'Prof', ''),
-(2016000010, 'ana.albano05@gmail.com', 'Prof', 'Ildefonso'),
-(2016000014, 'BB@bbb', 'Student', 'BBBBB'),
-(2016000015, 'test@test1', 'Prof', 'Test'),
-(2016000016, 'test@test2', 'Prof', 'test'),
-(2016000017, 'test@test3', 'Prof', 'test');
+(1, 'admin@admin', 'Admin', 'password');
 
 -- --------------------------------------------------------
 
@@ -173,7 +148,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`ID`, `Name`, `Picture`) VALUES
-(2012479131, 'Brice Brays Bryce', '2012479131.jpg');
+(1, 'Admin', 'admin.jpg');
 
 -- --------------------------------------------------------
 
@@ -185,16 +160,6 @@ CREATE TABLE `balance` (
   `ID` bigint(15) NOT NULL,
   `Total` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `balance`
---
-
-INSERT INTO `balance` (`ID`, `Total`) VALUES
-(123, 2000),
-(201501280, 60600),
-(201501281, 56700),
-(201501282, 60800);
 
 -- --------------------------------------------------------
 
@@ -224,22 +189,6 @@ CREATE TABLE `events` (
   `Color` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`ID`, `Title`, `Start`, `End`, `Color`) VALUES
-(1, 'Midterm Exams', '2016,1,22', '2016,1,27', 'f56954'),
-(2, 'Valentines Day', '2016,1,14', '', '00c0ef'),
-(3, 'General Assembly', '2016,1,5', '', '3c8dbc'),
-(4, 'Faculty Meeting', '2016,1,22', '', 'f39c12'),
-(14, 'TestLiveEvent', '2016,1,29', NULL, '001f3f'),
-(15, 'TEST EVENTsasad', '2016,1,10', NULL, '001f3f'),
-(16, 'Holiday', '2016,1,04', NULL, '00c0ef'),
-(17, 'Holiday', '2016,2,08', NULL, '00c0ef'),
-(18, 'General Assembly', '2016,2,02', NULL, '3c8dbc'),
-(19, 'EVENT 1', '2016,2,09', NULL, 'f39c12');
-
 -- --------------------------------------------------------
 
 --
@@ -255,17 +204,6 @@ CREATE TABLE `guest` (
   `Status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `guest`
---
-
-INSERT INTO `guest` (`ID`, `FName`, `MName`, `LName`, `Email`, `Status`) VALUES
-(2016000001, 'Mei', 'Ildefonso', 'Albano', 'ana.albano05-1@gmail.com', 'Activated'),
-(2016000002, 'Cleavant', 'Mencias', 'Sarte', 'cleavantsarte40@gmail.com', 'Activated'),
-(2016000003, 'john jeriel', 'baris', 'guino', 'guino.john@gmail.com', 'Activated'),
-(2016000004, 'Gio', 'n/a', 'Lagasca', 'gio.lagasca03@gmail.com', 'Activated'),
-(2016000005, 'Bryce', 'Quintano', 'Deyto', 'brays420@gmail.com', 'Activated');
-
 -- --------------------------------------------------------
 
 --
@@ -280,19 +218,6 @@ CREATE TABLE `instructor` (
   `Gender` varchar(10) NOT NULL,
   `Picture` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `instructor`
---
-
-INSERT INTO `instructor` (`ID`, `FName`, `MName`, `LName`, `Gender`, `Picture`) VALUES
-(2016000006, 'Bryce', 'Brays', 'Deyto', 'Male', ''),
-(2016000007, 'Francis', 'Fran', 'Quintano', 'Male', ''),
-(2016000008, 'Yuri', 'Husky', 'Dog', 'Male', ''),
-(2016000010, 'Mei', 'Ildefonso', 'Albano', 'Female', ''),
-(2016000015, 'TestProf1', 'Test', 'Test1', 'Male', ''),
-(2016000016, 'testprof2', 'test', 'test2', 'Male', ''),
-(2016000017, 'Testprof3', 'test', 'test3', 'Male', '');
 
 -- --------------------------------------------------------
 
@@ -312,34 +237,6 @@ CREATE TABLE `messages` (
   `Date` datetime NOT NULL,
   `isRead` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`ID`, `Sender`, `Recipient`, `Subject`, `Message`, `Attachment`, `fileName`, `fileSize`, `Date`, `isRead`) VALUES
-(1, 2012479131, 201501280, 'Test 1', 'Test Message 1', NULL, NULL, NULL, '2016-02-01 00:00:00', 1),
-(2, 2012479131, 201501280, 'Test 2', 'Test Message 1', NULL, NULL, NULL, '2016-03-01 00:00:00', 0),
-(3, 201501281, 201501280, 'Hello', 'Hello World!', NULL, NULL, NULL, '2016-03-04 00:00:00', 0),
-(4, 2016000008, 201501280, 'Message 3', 'ASDASDSDASDASDASDASD', NULL, NULL, NULL, '2016-03-03 00:00:00', 0),
-(5, 2016000008, 201501280, 'AW', 'None', NULL, NULL, NULL, '2016-03-03 00:00:00', 0),
-(6, 201501282, 201501280, 'None', '...............', NULL, NULL, NULL, '2016-03-05 00:00:00', 1),
-(7, 2016000010, 201501280, 'Messsssaaagggeee', '...............,.,.,.,.,.,.,.,', NULL, NULL, NULL, '2016-03-06 00:00:00', 1),
-(9, 2012479131, 201501280, '1234567890', 'Message Message Message Message Message Message Message Message Message Message Message ', 'jpg', 'eb.jpg', '2500 KB', '2016-03-09 19:43:00', 1),
-(10, 201501280, 201501281, 'Test', '<p>TEST<b>&nbsp;MESSAGE&lt;---B</b></p>', '', NULL, NULL, '2016-03-10 19:42:07', 1),
-(11, 201501281, 201501280, 'ATTACHMENT TEST', '<h1><b><i><u>TEST MESSAGE WITH ATTACHMENT</u></i></b><br></h1>', '', NULL, NULL, '2016-03-10 19:43:51', 0),
-(12, 201501280, 2012479131, 'message', '<p>sdasdda</p>', '', NULL, NULL, '2016-03-10 19:56:17', 0),
-(13, 201501280, 2012479131, 'message', '<p>sdasdda</p>', '', NULL, NULL, '2016-03-10 19:57:27', 0),
-(14, 201501280, 2012479131, 'message', '<p>sdasdda</p>', '', NULL, NULL, '2016-03-10 19:57:29', 0),
-(15, 201501280, 2012479131, 'message', '<p>sdasdda</p>', '', NULL, NULL, '2016-03-10 19:57:30', 0),
-(16, 201501280, 2012479131, 'message', '<p>sdasdda</p>', 'png', '18-tumblr_lwij6bzK4Y1r8q0iuo1_1280.png', '286489', '2016-03-10 19:57:51', 1),
-(17, 2012479131, 201501280, 'message', '<p>sdasdda</p>', 'png', 'a.jpg', '3000 KB', '2016-03-10 19:58:47', 1),
-(18, 201501280, 201501281, 'Picture', '<p>asdsadassadsad</p>', 'png', '18-tumblr_lwij6bzK4Y1r8q0iuo1_1280.png', '286489', '2016-03-10 20:34:12', 1),
-(19, 201501280, 201501281, 'Code', '<p>cde</p>', 'php', '19-ajax.php', '843', '2016-03-10 20:34:49', 1),
-(20, 0, 0, '', '', NULL, NULL, NULL, '2016-03-10 20:35:45', 0),
-(21, 2012479131, 201501280, 'From Admin', '', 'jpg', '21-Miles.JPG', '71581 KB', '2016-03-10 22:35:53', 1),
-(22, 201501280, 2016000006, 'Hello', '<p><b>Test Message :<br></b><br></p><p><b></b>â€ƒ\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n\r\n\r\n\r\nmessage \r\n', 'png', '22-Course-Graph.PNG', '16290 KB', '2016-03-12 00:20:28', 1),
-(23, 201501281, 2016000006, 'Message', '<p>Test Message :</p><p>\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n\r\n\r\nMessage \r\n\r\n</p>', 'png', '23-Age-Chart.PNG', '15274 KB', '2016-03-12 00:23:29', 1);
 
 -- --------------------------------------------------------
 
@@ -394,16 +291,6 @@ CREATE TABLE `students` (
   `Status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`ID`, `FName`, `MName`, `LName`, `Birthdate`, `Gender`, `Age`, `Year`, `Course`, `Curriculum`, `Picture`, `Subjects`, `Status`) VALUES
-(201501280, 'Bryce Francis', 'Quintano', 'Deyto', '1994-02-07', 'Male', 21, 'Second', 'CS-SE', 'SE-1516', '201501280.jpg', '', 'Activated'),
-(201501281, 'Male', 'Student', 'Test', '1995-02-17', 'Male', 21, 'Second', 'CS-SE', 'SE-1516', '', '', 'Activated'),
-(201501282, 'Female', 'Student', 'Test', '1996-01-24', 'Female', 20, 'Third', 'CS-SE', 'SE-1516', '', '', 'Activated'),
-(2016000014, 'BBBB', 'BBBBB', 'BBBBB', '1994-12-31', 'Male', 21, 'Third', 'BS-SE', 'SE-1617', '', '', 'Pending');
-
 -- --------------------------------------------------------
 
 --
@@ -420,40 +307,6 @@ CREATE TABLE `subject12016` (
   `ProfID` int(15) DEFAULT NULL,
   `Count` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `subject12016`
---
-
-INSERT INTO `subject12016` (`SID`, `SCode`, `Section`, `Room`, `Time`, `Day`, `ProfID`, `Count`) VALUES
-(15, 'FIL1', 'SE11', '101', 800, 'M', 2016000007, 0),
-(16, 'ENG1', 'SE11', '101', 1130, 'M', 2016000006, 0),
-(17, 'MATH1', 'SE11', '204', 1445, 'W', 2016000008, 0),
-(18, 'INTROIT', 'SE11', 'LAB1', 1800, 'W', 2016000008, 0),
-(19, 'EUTH', 'SE11', '100', 1200, 'F', 2016000010, 0),
-(20, 'PE1', 'SE11', '206', 1300, 'F', 2016000008, 0),
-(21, 'FIL1', 'SE12', '202', 1445, 'T', 2016000007, 0),
-(22, 'ENG1', 'SE12', '102', 1800, 'T', 2016000006, 0),
-(23, 'INTROIT', 'SE12', 'LAB2', 1130, 'TH', 2016000008, 0),
-(24, 'MATH1', 'SE12', '404', 800, 'TH', 2016000008, 0),
-(25, 'EUTH', 'SE12', '212', 2000, 'S', 2016000010, 0),
-(26, 'PE1', 'SE12', '209', 1800, 'S', 2016000007, 0),
-(27, 'LOGIDES', 'GD12', '113', 800, 'M', 2016000010, 0),
-(28, 'LOGIDES', 'GD13', '118', 1445, 'TH', 2016000010, 0),
-(29, 'HIST1', 'A11', '202', 1445, 'W', 2016000010, 0),
-(30, 'HIST1', 'SE21', '202', 1800, 'S', 2016000010, 0),
-(31, 'PSYCH', 'SE21', '304', 1800, 'M', 2016000008, 0),
-(32, 'ECON', 'SE21', '307', 1800, 'T', 2016000008, 0),
-(33, 'MATH4', 'SE21', '302', 1445, 'M', 2016000007, 0),
-(34, 'JAVA1', 'SE21', 'LAB2', 1800, 'F', 2016000007, 0),
-(35, 'DATABASE', 'SE21', '106', 1445, 'F', 2016000006, 0),
-(36, 'PE4', 'SE21', '301', 1800, 'W', 2016000006, 0),
-(37, 'ENG1', 'SE22', '107', 800, 'M', 2016000008, 0),
-(40, 'INTROIT', 'SE13', 'LAB3', 800, 'F', 2016000006, 0),
-(41, 'PROG1', 'SE11', 'Lab7', 800, 'S', 2016000016, 0),
-(42, 'PROG1', 'SE12', 'Lab7', 1800, 'F', 2016000016, 0),
-(43, 'MATH4', 'WD41', '806', 800, 'TH', 2016000016, 0),
-(44, 'JAVA1', 'FA42', '705', 800, 'TH', 2016000015, 0);
 
 -- --------------------------------------------------------
 
@@ -570,16 +423,6 @@ CREATE TABLE `tempsubjects` (
   `Subjects` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tempsubjects`
---
-
-INSERT INTO `tempsubjects` (`ID`, `Subjects`) VALUES
-(0, ''),
-(201501280, '34-30-31-32-33-35-36-'),
-(201501281, '15-16-17-18-19-20-41-'),
-(201501282, '30-31-32-33-34-35-36-');
-
 -- --------------------------------------------------------
 
 --
@@ -595,17 +438,6 @@ CREATE TABLE `transactions` (
   `Date` datetime NOT NULL,
   `Term` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`T_ID`, `ID`, `Amount`, `Type`, `Card Number`, `Date`, `Term`) VALUES
-(5, 201501280, 10000, 'Card', '4537567500014297', '2016-03-07 10:32:18', '1st'),
-(6, 201501280, 10000, 'Cash', '0', '2016-03-07 11:53:19', ''),
-(7, 201501281, 30000, 'Card', '4537567500014297', '2016-03-07 11:56:58', '1st'),
-(8, 201501281, 50000, 'Cash', '0', '2016-03-10 16:57:02', ''),
-(9, 201501282, 60000, 'Cash', '0', '2016-03-10 16:58:18', '');
 
 --
 -- Indexes for dumped tables
