@@ -43,20 +43,230 @@ $(function() {
         });
     };
 
-    demos.prompt_default_value = function(){
-        bootbox.prompt({
-            title: "What is your real name?",
-            value: "makeusabrew",
-            callback: function(result) {
-                if (result === null) {
-                    Example.show("Prompt dismissed");
-                } else {
-                    Example.show("Hi <b>"+result+"</b>");
-                }
-            }
-        }); 
+    demos.prompt_default_value2 = function(){
+    	var id = $("#idval").attr('placeholder');
+    	var fname = $("#fnameval").val();
+    	var mname = $("#mnameval").val();
+    	var lname = $("#lnameval").val();
+    	var email = $("#emailval").val();
+    	var course = $("#courseval").val();
+    	var year = $("#yearval").val();
+    	var birthdate = $("#birthval").val();
+    	var gender;
+    	if($('#switchGender').is(':checked')){
+    		gender = 'Male';
+    	}
+    	else{
+    		gender = 'Female';
+    	}
+    	if(fname==''||mname==''||lname==''||email==''||course==''||year==''||birthdate==''){
+    		$('#bbox').removeClass('alert-info');
+        	$('#bbox').addClass('alert-danger');
+        	Example.show("<h4>Student Creation Failed</h4>");
+    	}
+    	else{
+    		$.post("checkinstructor.php", {
+    			id: id,
+				fname: fname,
+				lname: lname,
+				email: email
+			}, function(data) {
+				if(data == 'Exists'){
+					$('#bbox').removeClass('alert-info');
+		        	$('#bbox').addClass('alert-danger');
+		        	Example.show("<h4>Account Already Exists</h4>");
+				}
+				else{
+					$.post("createinstructor.php", {
+						id: id,
+						fname: fname,
+						lname: lname,
+						mname: mname,
+						email: email,
+						gender: gender
+					}, function(data) {
+						$('#bbox').removeClass('alert-danger');
+			        	$('#bbox').addClass('alert-info');
+			        	Example.show("<h3>Account Created</h3><br>Professor ID: <b>"+id+"</b><br>Name : <b>"+fname+" "+mname+" "+fname +"</b><br>Email : <b>"+email+"</b><br>Gender: "+gender);
+					});
+				}
+			});
+    	}
     };
-
+    
+    demos.prompt_default_value = function(){
+    	var id = $("#idval").attr('placeholder');
+    	var fname = $("#fnameval").val();
+    	var mname = $("#mnameval").val();
+    	var lname = $("#lnameval").val();
+    	var email = $("#emailval").val();
+    	var gender;
+    	if($('#switchGender').is(':checked')){
+    		gender = 'Male';
+    	}
+    	else{
+    		gender = 'Female';
+    	}
+    	if(fname==''||mname==''||lname==''||email==''){
+    		$('#bbox').removeClass('alert-info');
+        	$('#bbox').addClass('alert-danger');
+        	Example.show("<h4>Account Creation Failed</h4>");
+    	}
+    	else{
+    		$.post("checkinstructor.php", {
+    			id: id,
+				fname: fname,
+				lname: lname,
+				email: email
+			}, function(data) {
+				if(data == 'Exists'){
+					$('#bbox').removeClass('alert-info');
+		        	$('#bbox').addClass('alert-danger');
+		        	Example.show("<h4>Account Already Exists</h4>");
+				}
+				else{
+					$.post("createinstructor.php", {
+						id: id,
+						fname: fname,
+						lname: lname,
+						mname: mname,
+						email: email,
+						gender: gender
+					}, function(data) {
+						$('#bbox').removeClass('alert-danger');
+			        	$('#bbox').addClass('alert-info');
+			        	Example.show("<h3>Account Created</h3><br>Professor ID: <b>"+id+"</b><br>Name : <b>"+fname+" "+mname+" "+fname +"</b><br>Email : <b>"+email+"</b><br>Gender: "+gender);
+					});
+				}
+			});
+    	}
+    };
+    
+    demos.student = function(){
+    	var id = $("#idval").attr('placeholder');
+    	var fname = $("#fnameval").val();
+    	var mname = $("#mnameval").val();
+    	var lname = $("#lnameval").val();
+    	var email = $("#emailval").val();
+    	var course = $("#courseval").val();
+    	var year = $("#yearval").val();
+    	var birthdate = $("#birthval").val();
+    	var gender;
+    	if($('#switchGender').is(':checked')){
+    		gender = 'Male';
+    	}
+    	else{
+    		gender = 'Female';
+    	}
+    	if(fname==''||mname==''||lname==''||email==''||course==''||year==''||birthdate==''){
+    		$('#bbox').removeClass('alert-info');
+        	$('#bbox').addClass('alert-danger');
+        	Example.show("<h4>Student Creation Failed - Please Check All Input</h4>");
+    	}
+    	else{
+    		$.post("checkstudent.php", {
+    			id: id,
+				fname: fname,
+				lname: lname,
+				email: email
+			}, function(data) {
+				if(data == 'Exists'){
+					$('#bbox').removeClass('alert-info');
+		        	$('#bbox').addClass('alert-danger');
+		        	Example.show("<h4>Account Already Exists</h4>");
+				}
+				else{
+					$.post("createstudent.php", {
+						id: id,
+						fname: fname,
+						lname: lname,
+						mname: mname,
+						email: email,
+						course: course,
+						year: year,
+						gender: gender,
+						birthdate: birthdate
+					}, function(data) {
+						$('#bbox').removeClass('alert-danger');
+			        	$('#bbox').addClass('alert-info');
+			        	Example.show("<h3>Account Created</h3><br>Professor ID: <b>"+id+"</b><br>Name : <b>"+fname+" "+mname+" "+fname +"</b><br>Email : <b>"+email+"</b><br>Gender: "+gender+"</b><br>Birthdate: "+gender);
+					});
+				}
+			});
+    	}
+    };
+    demos.subject2 = function(){
+    	var time = $("#time").val();
+    	time = time.split(":");
+    	alert(time[0]+time[1]);
+    }
+    demos.subject = function(){
+    	document.getElementById("insFound").style.display = "none";
+		document.getElementById("rasFound").style.display = "none";
+    	var code = $("#scode").val();
+    	var section = $("#sec").val();
+    	var room = $("#room").val();
+    	var time1 = $("#time").val();
+    	var day = $("#day").val();
+    	var prof = $("#prof").val();
+    	time1 = time1.split(":");
+    	var time = time1[0]+time1[1];
+    	if(prof==''){
+    		prof = '0';
+    	}
+    	if(code==''||section==''||room==''||time==''||day==''){
+    		$('#bbox').removeClass('alert-info');
+        	$('#bbox').addClass('alert-danger');
+        	Example.show("<h4>Subject Creation Failed - Please Check All Input</h4>");
+    	}
+    	else{
+    		$.post("checksubject.php", {
+    			time: time,
+				day: day,
+				prof: prof,
+				room: room
+			}, function(data) {
+				var res = data;
+				res = data.split(",");
+				if(data == 'Proceed'){
+					$.post("createsubject.php", {
+						code: code,
+						section: section,
+						time: time,
+						day: day,
+						prof: prof,
+						room: room
+					}, function(data) {
+						$('#bbox').removeClass('alert-danger');
+			        	$('#bbox').addClass('alert-info');
+			        	Example.show("<h3>Subject Successfully Created</h3><br>Subject Code: <b>"+code+"</b><br>Section : <b>"+section+"</b><br>Day : <b>"+day+" - "+ time +"</b><br>Room: "+room+"</b><br>Instructor: "+prof);
+					});
+				}
+				else{
+					$('#conflictModal').modal('show'); 
+					$('#bbox').removeClass('alert-info');
+		        	$('#bbox').addClass('alert-danger');
+					$("#time2").attr('placeholder',res[1]);
+					$("#day2").attr('placeholder',res[0]);
+					$("#prof2").attr('placeholder',res[3]);
+					$("#room2").attr('placeholder',res[2]);
+					if(res[4]=="Instructor"){
+						document.getElementById("insFound").style.display = "block";
+					}
+					else{
+						document.getElementById("rasFound").style.display = "block";
+					}
+		        	Example.show("<h4>Subject Creation Failed - Conflict Found " + res[4] + "</h4>");
+				}
+			});
+    	}
+    };
+    demos.lock = function(){
+		$('#bbox').addClass('alert-danger');
+    	$('#bbox').removeClass('alert-info');
+		Example.show("<h4>Invalid Password</h4>");
+    };
+    
     demos.dialog = function() {
       bootbox.dialog({
         message: "I am a custom dialog",

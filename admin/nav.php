@@ -1,5 +1,38 @@
 <header class="main-header">
+              <?php 
+function tme ($time)
+{
+	$time = (mktime() - $time) + (3600*7); // to get the time since that moment
+	$time = ($time<1)? 1 : $time;
+	$tokens = array (
+			31536000 => 'year',
+			2592000 => 'month',
+			604800 => 'week',
+			86400 => 'day',
+			3600 => 'hour',
+			60 => 'minute',
+			1 => 'second'
+	);
 
+	foreach ($tokens as $unit => $text) {
+		if ($time < $unit) continue;
+		$numberOfUnits = floor($time / $unit);
+		return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+	}
+
+}
+$con = mysql_connect("localhost", "root", "");
+if(! $con )
+{
+	die('Could not connect: ' . mysql_error());
+}
+$db = mysql_select_db("enrollment", $con);
+$id = $_SESSION['ID'];
+$query = "SELECT * FROM `messages` WHERE `Recipient` = '$id' AND `isRead` ='0'";
+$result = mysql_query($query,$con);
+$new = mysql_num_rows($result);
+mysql_close($con);
+?>
     <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -22,30 +55,83 @@
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success"><?php echo $new;?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">You have <?php echo $new;?> messages</li>
               <li>
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
-                  <li><!-- start message -->
+                 
+                  <?php 
+					$con = mysql_connect("localhost", "root", "");
+					if(! $con ){
+	die('Could not connect: ' . mysql_error());
+}
+$db = mysql_select_db("enrollment", $con);
+$id = $_SESSION['ID'];
+$query = "SELECT * FROM `messages` WHERE `Recipient` = '$id' AND `isRead` = '0' ORDER BY `messages`.`Date` DESC";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+$sender = $row['Sender'];
+$name = "";
+$pic = "";
+$type = "";
+$query2 = "SELECT * FROM `accounts` WHERE `ID` = '$sender'";
+$result2 = mysql_query($query2,$con);
+while ($row2 = mysql_fetch_assoc($result2)) {
+	$type = $row2['Type'];
+}
+if($type=="Student"){
+	$query3 = "SELECT * FROM `students` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['FName']." ".$row3['LName'];
+		$pic = $row3['Picture'];
+		if($row3['Picture']!=""){
+			$pic = $row3['Picture'];
+		}
+		else{
+			$pic = strtolower($row3['Gender']).".jpg";
+		}
+	}
+}
+else if($type=="Prof"){
+	$query3 = "SELECT * FROM `instructor` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['FName']." ".$row3['LName'];
+		$pic = strtolower($row3['Gender']).".jpg";
+	}
+}
+else if($type=="Admin"){
+	$query3 = "SELECT * FROM `admin` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['Name'];
+		$pic = $row3['Picture'];
+	}
+}
+?>
+<li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="../accounts/<?php echo $_SESSION["Picture"];?>" class="img-circle" alt="User Image">
+                        <img src="../accounts/<?php echo $pic;?>" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                        <?php echo $name;?>
+                        <small><i class="fa fa-clock-o"></i> <?php echo tme(strtotime($row['Date']));?></small>
                       </h4>
                       <!-- The message -->
-                      <p>Why not buy a new awesome theme?</p>
+                      <p><?php echo $row['Subject'];?></p>
                     </a>
                   </li>
+<?php }mysql_close($con);?>
                   <!-- end message -->
                 </ul>
+
                 <!-- /.menu -->
               </li>
               <li class="footer"><a href="#">See All Messages</a></li>
@@ -125,26 +211,13 @@
               <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="../accounts/<?php echo $_SESSION["Picture"];?>" class="img-circle" alt="User Image">
-
+				
                 <p>
-                  <?php  echo $_SESSION["Name"];?> - Administrator
+                  	<?php  echo $_SESSION["Name"];?>
+                	<small>Site - Administrator</small> 
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="col-md-12">

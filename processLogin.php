@@ -40,9 +40,18 @@ else{
 					$_SESSION["ID"] = $row2['ID'];
 					$_SESSION["Name"] = $row2['FName']." ".$row2['LName'];
 					$_SESSION["Type"] = "Student";
+					$_SESSION["Course"] = $row2['Course'];
+					$_SESSION['expire'] = time() + 300;
+					if($row2['Picture']!=""){
+						$_SESSION["Picture"] = $row2['Picture'];
+					}
+					else{
+						$_SESSION["Picture"] = strtolower($row2['Gender']).".jpg";
+					}
+					echo $_SESSION["Type"];
 				}
 			}
-		else if($row['Type']=="Admin"){
+			else if($row['Type']=="Admin"){
 				$query2 = "SELECT * FROM `admin` WHERE `ID` = '$ID'";
 				$result2 = mysql_query($query2,$con);
 				while ($row2 = mysql_fetch_assoc($result2)) {
@@ -50,6 +59,24 @@ else{
 					$_SESSION["Name"] = $row2['Name'];
 					$_SESSION["Type"] = "Admin";
 					$_SESSION["Picture"] = $row2['Picture'];
+					$_SESSION['expire'] = time() + 30;
+					echo $_SESSION["Type"];
+				}
+			}
+			else if($row['Type']=="Prof"){
+				$query2 = "SELECT * FROM `instructor` WHERE `ID` = '$ID'";
+				$result2 = mysql_query($query2,$con);
+				while ($row2 = mysql_fetch_assoc($result2)) {
+					$_SESSION["ID"] = $row2['ID'];
+					$_SESSION["Name"] = $row2['FName']." ".$row2['LName'];
+					$_SESSION["Type"] = "Prof";
+					if($row2['Picture']!=""){
+						$_SESSION["Picture"] = $row2['Picture'];
+					}
+					else{
+						$_SESSION["Picture"] = strtolower($row2['Gender']).".jpg";
+					}
+					$_SESSION['expire'] = time() + 30;
 					echo $_SESSION["Type"];
 				}
 			}

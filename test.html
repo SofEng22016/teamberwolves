@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Turn checkboxes and radio buttons in toggle switches.">
+    <meta name="author" content="Mattia Larentis, Emanuele Marchi and Peter Stein">
+    <title>Bootstrap Switch · Turn checkboxes and radio buttons in toggle switches</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+  </head>
+  <body>
+      <input id="switch" type="checkbox"checked="true" class="BSswitch" data-on-color="success" data-off-color="danger" data-on-text="I" data-off-text="O" data-size="mini">
+  
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script>
+    $(function(argument) {
+      $('#switch').bootstrapSwitch();
+    })
+    </script>
+  </body>
+</html>

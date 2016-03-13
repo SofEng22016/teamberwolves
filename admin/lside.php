@@ -1,5 +1,5 @@
 <aside class="main-sidebar">
-
+	<?php include 'checkenrollment.php';?>
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
@@ -16,15 +16,6 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -55,13 +46,18 @@
       <form id="finnav" action="index.php" method="post" role="form">
       	<input type="hidden" name="opt" value="Finance" />
       </form>
+      <form id="finnav" action="index.php" method="post" role="form">
       <ul class="sidebar-menu">
         <li>
         <a href="#">
-        	<i class="fa fa-user-plus"></i>
+        	<i class="fa fa-plus"></i>
         	<span>Enrollment</span>
         	<span class="pull-right" style="margin-top: -12px;">
-				<input id="switch" type="checkbox"checked="true" class="BSswitch" data-on-color="success" data-off-color="danger" data-on-text="I" data-off-text="O" data-size="mini">
+        		<input id="switch" type="checkbox"
+				<?php if($enrollment=='True'){?>
+				 checked="true" 
+				<?php }?>
+				class="BSswitch" onSwitchChange="toggleEnrollment()" data-on-color="success" data-off-color="danger" data-on-text="I" data-off-text="O" data-size="mini">
 			</span>
         </a>
         </li>
@@ -77,6 +73,7 @@
 		<li><a href="javascript:{}" onclick="document.getElementById('curnav').submit();"><i class="fa fa-file-text-o"></i><span>Curriculum</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('finnav').submit();"><i class="fa fa-money"></i><span>Finance</span></a></li>
       </ul>
+      </form>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

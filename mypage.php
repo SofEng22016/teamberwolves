@@ -20,10 +20,10 @@ session_start();
 		<!-- CSS
 		================================================== -->
 		
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 		
 		<!-- Fontawesome Icon font -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/fonts-google.css">
 		<!-- bootstrap.min -->
         <link rel="stylesheet" href="css/jquery.fancybox.css">
 		<!-- bootstrap.min -->
@@ -311,11 +311,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				<div class="overlay">
 					<div class="container">
 						<div class="row">
-						
 							<div class="sec-title text-center white wow animated fadeInDown">
 								<h2>Programs</h2>
 							</div>
-							
 							<div id="testimonial" class=" wow animated fadeInUp">
 								<div class="testimonial-item text-center">
 									<i class="fa fa-desktop fa-3x"></i>

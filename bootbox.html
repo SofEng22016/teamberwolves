@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Examples | Bootbox.js&mdash;alert, confirm and flexible dialogs for the Bootstrap framework</title>
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/bb.css" />
+</head>
+<body class="bb-js">
+    <div class="bb-alert alert alert-info" style="display:none; 
+    left: 80%;
+    bottom: 10%;">
+        <span>The examples populate this alert with dummy content</span>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Alert
+                    <a href="#" data-bb="alert_callback" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Confirm
+                    <a href="#" data-bb="confirm" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Prompt
+                    <a href="#" data-bb="prompt" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Prompt with default value
+                    <a href="#" data-bb="prompt_default_value" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Custom Dialog
+                    <a href="#" data-bb="dialog" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Custom HTML Contents
+                    <a href="#" data-bb="custom_html" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Custom HTML Forms
+                    <a href="#" data-bb="custom_form" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+                </p> 
+            </div>
+        </div>
+    </div>
+    <!-- JS dependencies -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="js/bb2.js"></script>
+    
+    <!-- bootbox code -->
+    <script src="js/bootbox.js"></script>
+    <!-- put all demo code in one place -->
+    <script src="js/bb.js"></script>
+    <script>
+        $(function () {
+            Example.init({
+                "selector": ".bb-alert"
+            });
+        });
+        $(function() {
+            var demos = {};
+
+            $(document).on("click", "a[data-bb]", function(e) {
+                e.preventDefault();
+                var type = $(this).data("bb");
+
+                if (typeof demos[type] === 'function') {
+                    demos[type]();
+                }
+            });
+        	demos.prompt = function() {
+                  Example.show("Professor ID: <b>123456</b><br>Name : <b>Bryce Francis</b><br>Created");
+        	};
+        });
+    </script>
+</body>
+</html>

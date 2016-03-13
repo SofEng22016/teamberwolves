@@ -1,3 +1,6 @@
+<div id="bbox" class="bb-alert alert alert-info" style="display:none; left: 80%; bottom: 10%;">
+        <span>The examples populate this alert with dummy content</span>
+</div>
 <section class="content">
 	<div class="box">
 		<ul class="nav nav-pills nav-justified">
@@ -7,7 +10,7 @@
   			<li role="presentation">
   				<a href="#addEdit" aria-controls="addEdit" role="tab" data-toggle="tab">Add / Edit / Delete</a>
   			</li>
-  			<li role="presentation">
+  			<li role="presentation" class="disabled">
   				<a href="#info" aria-controls="info" role="tab" data-toggle="tab">Information</a>
   			</li>
 		</ul>
@@ -102,6 +105,16 @@ for($x=1;$x<=rand(100, 200);$x++){
             					
             					<form id="addInstructor" name="form" role="form">
             						<div class="box-body">
+            							<div class="form-group">
+            								<?php include 'countaccounts.php'; ?>
+            								<label class="control-label">ID Number :</label>
+            								<div class="row">
+            									<div class="col-xs-4">
+                  									<input type="text" id="idval" name="idval" class="form-control disabled" placeholder="<?php echo $IDval; ?>">
+                								</div>
+            								</div>
+            							</div>
+            							
               							<div class="row">
                 							<div class="col-xs-4">
                   								<input type="text" name="fnameval" id="fnameval" class="form-control" placeholder="First Name">
@@ -127,7 +140,7 @@ for($x=1;$x<=rand(100, 200);$x++){
               							<br>
               							<div class="row">
               								<div class="col-xs-12">
-              									<button type="button" class="btn btn-primary btn-block">Add Instructor</button>
+                    							<a href="#" data-bb="prompt_default_value" class="btn btn-primary btn-block">Add Instructor</a>
               								</div>
               							</div>
             						</div>
@@ -176,7 +189,7 @@ for($x=1;$x<=rand(100, 200);$x++){
               						<br>
               						<div class="row">
               							<div class="col-xs-8">
-                  							<input type="text" class="form-control" placeholder="Email Address">
+                  							<input type="text" name="emailres" id="emailres" class="form-control" placeholder="Email Address">
                 						</div>
                 						<div class="col-xs-4">
                 							<span style="margin-top: -12px;">
@@ -187,10 +200,10 @@ for($x=1;$x<=rand(100, 200);$x++){
               						<br>
               						<div class="row">
               							<div class="col-xs-6">
-              								<button type="button" class="btn btn-danger btn-block disabled">Delete Instructor</button>
+              								<button type="button" id="delins" class="btn btn-danger btn-block disabled">Delete Instructor</button>
               							</div>
               							<div class="col-xs-6">
-              								<button type="button" class="btn btn-success btn-block disabled">Edit Instructor</button>
+              								<button type="button" id="editins" class="btn btn-success btn-block disabled">Edit Instructor</button>
               							</div>
               						</div>
             					</div>

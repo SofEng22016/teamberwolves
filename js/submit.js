@@ -23,6 +23,12 @@ $(document).ready(function(){
 				else if(data == 'Admin'){
 					window.location = "http://localhost:81/softeng/admin/index.php";
 				}
+				else if(data == 'Student'){
+					window.location = "http://localhost:81/softeng/student/index.php";
+				}
+				else if(data == 'Prof'){
+					window.location = "http://localhost:81/softeng/instructor/index.php";
+				}
 				else{
 					location.reload();
 				}

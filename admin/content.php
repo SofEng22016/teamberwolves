@@ -19,15 +19,15 @@ switch ($opt) {
 		echo "Applications-Content";
 		break;
 	case "Subjects":
-		echo "Subjects-Content";
+		include 'subjects.php';
 		break;
 	case "Curriculum":
-		echo "Curriculum-Content";
+		include 'curriculum.php';
 		break;
 	case "Finance":
 		echo "Finance-Content";
 		break;
 	default:
-		include 'overview.php';
+		include 'options.php';
 }
 ?>
