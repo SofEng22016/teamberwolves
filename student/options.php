@@ -15,7 +15,7 @@
 								<img src="../img/student-options/grades.jpg" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. ">
 								<figcaption class="mask">
 									<h3>Grades</h3>
-									<p>View all of your grades and check your course curriculum.</p>
+									<p>View all of your grades and course curriculum.</p>
 								</figcaption>
 							</li>
 							
@@ -23,7 +23,7 @@
 								<img src="../img/student-options/schedule.jpg" height="270.875px" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. ">
 								<figcaption class="mask">
 									<h3>Schedule</h3>
-									<p>View your class schedule and check any upcoming events.</p>
+									<p>View your class schedule and upcoming events.</p>
 								</figcaption>
 							</li>
 							
@@ -31,7 +31,7 @@
 								<img src="../img/student-options/subjects.jpg" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry.">
 								<figcaption class="mask">
 									<h3>Subjects</h3>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. </p>
+									<p>View the subjects that you are enrolled in. </p>
 								</figcaption>
 							</li>
 							
@@ -39,7 +39,7 @@
 								<img src="../img/student-options/finance.jpg" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. ">
 								<figcaption class="mask">
 									<h3>Finance</h3>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. </p>
+									<p>View your statement of accounts. </p>
 								</figcaption>
 							</li>
 							
@@ -47,7 +47,7 @@
 								<img src="../img/student-options/profile.jpg" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. ">
 								<figcaption class="mask">
 									<h3>Profile</h3>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. </p>
+									<p>View your profile. </p>
 								</figcaption>
 							</li>
 						</ul>

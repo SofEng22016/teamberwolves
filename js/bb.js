@@ -32,6 +32,37 @@ $(function() {
     demos.alert_button = function() {
         bootbox.alert("This alert has custom button text", "So it does!");
     };
+    
+    demos.subjectnew = function() {
+    	var code = $("#code").val();
+    	var name = $("#name").val();
+    	var desc = $("#desc").val();
+    	var lab = $("#lab").val();
+    	var lec = $("#lec").val();
+    	var req = $("#req").val();
+    	if(code==''||name==''||desc==''||lab==''||lec==''){
+    		$('#bbox').removeClass('alert-info');
+        	$('#bbox').addClass('alert-danger');
+        	Example.show("<h4>Subject Creation Failed</h4>");
+    	}
+    	$.post("addsubject.php", {
+			code: code,
+			name: name,
+			desc: desc,
+			lab: lab,
+			lec: lec,
+			req: req
+		}, function(data) {
+			if(data=='Exists'){
+				$('#bbox').removeClass('alert-info');
+	        	$('#bbox').addClass('alert-danger');
+	        	Example.show("<h4>Subject Already Exists</h4>");
+			}
+			else{
+				Example.show(data);
+			}
+		});
+    };
 
     demos.confirm_buttons = function() {
         bootbox.confirm("This confirm has custom buttons - see?", "No", "Yes!", function(result) {
@@ -161,6 +192,7 @@ $(function() {
     	if(fname==''||mname==''||lname==''||email==''||course==''||year==''||birthdate==''){
     		$('#bbox').removeClass('alert-info');
         	$('#bbox').addClass('alert-danger');
+        	alert(email + course + year+ birthdate);
         	Example.show("<h4>Student Creation Failed - Please Check All Input</h4>");
     	}
     	else{
@@ -189,7 +221,7 @@ $(function() {
 					}, function(data) {
 						$('#bbox').removeClass('alert-danger');
 			        	$('#bbox').addClass('alert-info');
-			        	Example.show("<h3>Account Created</h3><br>Professor ID: <b>"+id+"</b><br>Name : <b>"+fname+" "+mname+" "+fname +"</b><br>Email : <b>"+email+"</b><br>Gender: "+gender+"</b><br>Birthdate: "+gender);
+			        	Example.show("<h3>Account Created</h3><br>Student ID: <b>"+id+"</b><br>Name : <b>"+fname+" "+mname+" "+fname +"</b><br>Email : <b>"+email+"</b><br>Gender: "+gender+"</b><br>Birthdate: "+gender);
 					});
 				}
 			});

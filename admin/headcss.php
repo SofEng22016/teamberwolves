@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/ionicons.min.css">
 <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
-<link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+<link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
 <link href="../css/bootstrap-switch.css" rel="stylesheet">
 <link rel="stylesheet" href="../plugins/morris/morris.css">
 <link rel="stylesheet" href="../plugins/fullcalendar/fullcalendar.min.css">

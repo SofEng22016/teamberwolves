@@ -1,4 +1,19 @@
 $(document).ready(function(){
+	$("#forgotbtn").click(function(){
+		$('#loginModal').modal('hide');
+		$('#forgotModal').modal('show');
+		document.getElementById("successForgot").style.display = "none";
+		document.getElementById("inputForgot").style.display = "block";
+	});
+	$("#btnReset").click(function(){
+		var id = $("#forgotID").val();
+		$.post("resetpassword.php", {
+			id: id
+		}, function(data) {
+		});
+		document.getElementById("successForgot").style.display = "block";
+		document.getElementById("inputForgot").style.display = "none";
+	});
 	$("#submitLogin").click(function(){
 		var user = $("#user").val();
 		var pass = $("#pass").val();
@@ -28,6 +43,9 @@ $(document).ready(function(){
 				}
 				else if(data == 'Prof'){
 					window.location = "instructor/index.php";
+				}
+				else if(data == 'Guest'){
+					window.location = "mypage.php";
 				}
 				else{
 					window.location = "logout.php";
@@ -156,4 +174,16 @@ $('#the-thing-that-opens-your-alert').click(function () {
   });
 $('.close').click(function () {
 	$(this).parent().removeClass('in'); // hides alert with Bootstrap CSS3 implem
+});
+$("#servicesBtn").click(function(){
+	var type = $("#type").val();
+	if(type == 'Admin'){
+		window.location = "admin/index.php";
+	}
+	else if(type == 'Student'){
+		window.location = "student/index.php";
+	}
+	else if(type == 'Prof'){
+		window.location = "instructor/index.php";
+	}
 });

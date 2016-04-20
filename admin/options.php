@@ -21,6 +21,42 @@ while ($row = mysql_fetch_assoc($result)) {
 		$professors++;
 	}
 }
+$messages = 0;
+$attachments = 0;
+$query = "SELECT * FROM `messages`";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$messages++;
+}
+$query = "SELECT * FROM `messages` WHERE `fileSize` > '0'";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$attachments++;
+}
+$amount = 0;
+$query = "SELECT * FROM `transactions`";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$amount+= $row['Amount'];
+}
+$events = 0;
+$query = "SELECT * FROM `events`";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$events++;
+}
+$resources = 0;
+$query = "SELECT * FROM `resources`";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$resources+=$row['FileCount'];
+}
+$subjects = 0;
+$query = "SELECT * FROM `subject_info`";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+	$subjects++;
+}
 ?>
 	<section class="content">
 		<div class="row">
@@ -87,27 +123,66 @@ while ($row = mysql_fetch_assoc($result)) {
         	</div>
     	</div>
     	<div class="col-md-8">
-        	<div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Income</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
-              <ul class="chart-legend clearfix">
-                    <li><i class="fa fa-circle-o text-light-blue"></i> Tuition Payments</li>
-                    <li><i class="fa fa-circle-o text-gray"></i> Miscellaneous Payments</li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
+        	<div class="row">
+        		<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-blue"><i class="fa fa-envelope"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Total Messages</span>
+		            		<span class="info-box-number"><?php echo $messages;?></span>
+		           		</div>
+		          	</div>
+    			</div>
+		    	<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-red"><i class="fa fa-file"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Total Files Uploaded</span>
+		            		<span class="info-box-number"><?php echo $attachments;?></span>
+		           		</div>
+		          	</div>
+		    	</div>
+        	</div>
+        	<div class="row">
+        		<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-yellow"><i class="fa fa-money"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Total Payments Recieved</span>
+		            		<span class="info-box-number">PHP <?php echo $english_format_number = number_format($amount);?></span>
+		           		</div>
+		          	</div>
+    			</div>
+		    	<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-purple"><i class="fa fa-calendar-o"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Events</span>
+		            		<span class="info-box-number"><?php echo $events;?></span>
+		           		</div>
+		          	</div>
+		    	</div>
+        	</div>
+        	<div class="row">
+        		<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-gray"><i class="fa fa-paperclip"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Total Resources Uploaded</span>
+		            		<span class="info-box-number"><?php echo $resources;?></span>
+		           		</div>
+		          	</div>
+    			</div>
+		    	<div class="col-md-6">
+		        	<div class="info-box">
+		            	<span class="info-box-icon bg-orange"><i class="fa fa-book"></i></span>
+		            	<div class="info-box-content">
+		            		<span class="info-box-text">Total Number of Subjects</span>
+		            		<span class="info-box-number"><?php echo $subjects;?></span>
+		           		</div>
+		          	</div>
+		    	</div>
+        	</div>
     	</div>
 	</div>
   	</section>

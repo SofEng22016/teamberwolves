@@ -2,9 +2,89 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
+			<ul class="nav nav-pills nav-justified">
+	  			<li role="presentation" class="active">
+	  				<a href="#current" aria-controls="current" role="tab" data-toggle="tab">Current Term</a>
+	  			</li>
+	  			<li role="presentation">
+	  				<a href="#list" aria-controls="list" role="tab" data-toggle="tab">All</a>
+	  			</li>
+			</ul>
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="list">
-					<!-- TableStart -->
+				<!-- ---------------------------------------------------------------------- -->
+				<div role="tabpanel" class="tab-pane active" id="current">
+						<!-- TableStart -->
+						<div class="box-header">
+							<h3 class="box-title">Grades - Curriculum</h3>
+						</div>
+						<div class="box-body">
+							<h3>Subjects</h3>
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th colspan="6">&nbsp;</th>
+										<th colspan="3" style="text-align: center;">Grade</th>
+									</tr>
+									<tr>
+										<th>Subject Code</th>
+										<th>Section</th>
+										<th>Day</th>
+										<th>Time</th>
+										<th>Room</th>
+										<th>Instructor</th>
+										<th>Midterm</th>
+										<th>Finals</th>
+										<th>Term</th>
+									</tr>
+								</thead>
+								<tbody>
+<?php $con = mysql_connect("localhost", "root", "");
+                if(! $con )
+                {
+                	die('Could not connect: ' . mysql_error());
+                }
+                $id = $_SESSION['ID'];
+                $db = mysql_select_db("enrollment", $con);
+                $query = "SELECT `Subjects` FROM `tempsubjects` WHERE `ID` = '$id'";
+                $result = mysql_query($query,$con);
+                $subjects = array();
+                while ($row = mysql_fetch_assoc($result)) {
+					$subjects = explode("-", $row['Subjects']);
+                }
+                for($x=0;$x<count($subjects);$x++){
+                	$ID = $subjects[$x];
+	                $db = mysql_select_db("enrollment", $con);
+	                $query = "SELECT * FROM `subject12016` JOIN `instructor` ON `subject12016`.`ProfID` = `instructor`.`ID` WHERE `SID` = '$ID'";
+	                $result = mysql_query($query,$con);
+	                while ($row = mysql_fetch_assoc($result)) {
+                ?>
+                				<tr>
+                					<td><?php echo $row['SCode'];?></td>
+                					<td><?php echo $row['Section'];?></td>
+                					<td><?php echo $row['Day'];?></td>
+                					<td><?php echo $row['Time'];?></td>
+                					<td><?php echo $row['Room'];?></td>
+                					<td><?php echo $row['FName']." ".$row['MName']." ".$row['LName'];?></td>
+	                <?php 
+		                	$ID .= $id;
+			                $db = mysql_select_db("enrollment", $con);
+			                $query2 = "SELECT * FROM `grades` WHERE `ID` = '$ID'";
+			                $result2 = mysql_query($query2,$con);
+			                while ($row2 = mysql_fetch_assoc($result2)) {?>
+                					<td><?php echo $row2['Midterm'];?></td>
+                					<td><?php echo $row2['Final'];?></td>
+                					<td><?php echo ($row2['Midterm']+$row2['Final'])/2;?></td>
+                	<?php 	}?>
+                				</tr>
+		<?php 		}
+	             }?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				<!-- ---------------------------------------------------------------------- -->
+					<div role="tabpanel" class="tab-pane" id="list">
+						<!-- TableStart -->
 						<div class="box-header">
 							<h3 class="box-title">Grades - Curriculum</h3>
 						</div>
@@ -82,9 +162,7 @@ for($x=0;$x<count($allSubjects);$x++){ ?>
 	$total = 0;
 	$gwa = 0;
 	for($y=0;$y<count($allSubjects[$x]);$y++){
-	echo "<tr";
-	
-	echo ">";
+	echo "<tr>";
 	$desc[$x][0] = $allSubjects[$x][$y];
 	echo "<td>".$allSubjects[$x][$y]."</td>";
 	$db = mysql_select_db("enrollment", $con);

@@ -101,7 +101,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					
 					<!-- logo -->
 					<h1 class="navbar-brand">
-						<a href="#body">myPAGE<?php if(isset($_SESSION["ID"])){ echo "-".$_SESSION["ID"]." ".$_SESSION["Name"]; }?></a>
+						<a href="#body">myPAGE<?php if(isset($_SESSION["ID"])){ echo "-".$_SESSION["Type"]." ".$_SESSION["Name"]; }?></a>
 					</h1>
 					<!-- /logo -->
                 </div>
@@ -144,9 +144,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						<div class="bg-img bg-img-1"></div>
 						<div class="slide-caption">
                             <div class="caption-content">
-                                <h2 class="animated fadeInDown">Apply Now</h2>
-                                <span class="animated fadeInDown">Signup or Login to Apply Online / View Tuition / Inquire</span>
-                                <a href="#" class="btn btn-blue btn-effect"data-toggle="modal" data-target="#createAccountModal">Signup</a>
+                                <h2 class="animated fadeInDown">Sign In</h2>
+                                <span class="animated fadeInDown">Login to Enroll Online / View Tuition / Inquire</span>
                                 <a href="#" class="btn btn-blue btn-effect"data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
                         </div>
@@ -157,27 +156,25 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						<div class="bg-img bg-img-2"></div>
 						<div class="slide-caption">
                             <div class="caption-content">
-                                <h2 class="animated fadeInDown">HEADER Header header</h2>
-                                <span class="animated fadeInDown">TEXT Text text</span>
-                                <a href="#" class="btn btn-blue btn-effect">View Services</a>
+                                <h2 class="animated fadeInDown">SERVICES</h2>
+                                <span class="animated fadeInDown">Shows the Services offered by the Application</span>
+                                <input type="hidden" id="type" name="type" value="<?php if(isset($_SESSION["Type"])){ echo $_SESSION["Type"]; } else{ echo "none"; }?>">
+                                <a href="#" class="btn btn-blue btn-effect" id="servicesBtn">View Services</a>
                             </div>
                         </div>
 						
 					</div>
 					
-					<div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
-						
+					<div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
 						<div class="bg-img bg-img-3"></div>
 						<div class="slide-caption">
                             <div class="caption-content">
-                                <h2 class="animated fadeInDown">HEADER Header header</h2>
-                                <span class="animated fadeInDown">TEXT Text text</span>
-                                <a href="#" class="btn btn-blue btn-effect">Button</a>
+                                <h2 class="animated fadeInDown">Create Account</h2>
+                                <span class="animated fadeInDown">Signup to recieve our latest news / updates. </span>
+                                <a href="#" class="btn btn-blue btn-effect"data-toggle="modal" data-target="#createAccountModal">Signup</a>
                             </div>
                         </div>
-
 					</div>
-
 				</div><!-- /sl-slider -->
 
                 <!-- 
@@ -216,28 +213,36 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					<div class="row">
 						<div class="col-md-4 wow animated fadeInLeft">
 							<div class="recent-works">
-								<h3>News</h3>
+								<h3>Vision/Mission</h3>
 								<div id="works">
 									<div class="work-item">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> <br> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+										<b>Vision</b>
+										<br>
+										<br>
+										<p>iACADEMY envisions global recognition for developing innovative programs that hone future leaders and visionaries in ﬁelds that contribute signiﬁcantly to progress and growth in society</p>
 									</div>
 									<div class="work-item">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-									</div>
-									<div class="work-item">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+										<b>Mission</b>
+										<br>
+										<br>
+										<p>iACADEMY commits to produce future leaders and trailblazers by providing a venue for the incubation and realization of ideas through lasting and meaningful partnerships with leading industry players.</p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-7 col-md-offset-1 wow animated fadeInRight">
 							<div class="welcome-block">
-								<h3>About</h3>								
+								<h3>Welcome to iACADeMY</h3>								
 						     	 <div class="message-body">
 									<!--  <img src="img/member-1.jpg" class="pull-left" alt="member"> --> <!-- MEMBER PIC -->
-						       		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+						       		<p>
+						       			Our college is located in the heart of Makati City’s Central Business District. We offer specialized courses in Computing, Business, and Design, which are geared towards preparing students for a highly competitive professional world.
+
+										We are committed to producing future trailblazers and game changers in the industry through programs that provide a balance of theory-based and experience-based learning opportunities. With guidance from a faculty of practicing professionals and a 960-hour internship program with our prestigious partner companies, students are able to gain industry-relevant knowledge and training that will make them assets to future employers. 
+										
+										Be a Game Changer. Dare to be different here.
+									</p>
 						     	 </div>
-						       	<a href="#" class="btn btn-border btn-effect pull-right">Read More</a>
 						    </div>
 						</div>
 					</div>
@@ -258,24 +263,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						
 						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn">
 							<div class="service-item">
-								<a href="#">
+								<a>
 								<div class="service-icon">
 									<i class="fa fa-user fa-3x"></i>
 								</div>
 								<h3>Student Profile</h3>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+								<p>View the Student's profile that are enrolled.</p>
 								</a>
 							</div>
 						</div>
 					
 						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.3s">
 							<div class="service-item">
-								<a href="#">
+								<a>
 								<div class="service-icon">
 									<i class="fa fa-tasks fa-3x"></i>
 								</div>
 								<h3>Inquiries</h3>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+								<p>Inquire to the school's offered courses.</p>
 								</a>
 							</div>
 						</div>
@@ -283,23 +288,23 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.6s">
 							<div class="service-item">
 								<div class="service-icon">
-								<a href="#">
+								<a>
 									<i class="fa fa-university fa-3x"></i>
 								</div>
 								<h3>Online Enrollment</h3>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+								<p>Enroll online for new students and transferees.</p>
 								</a>
 							</div>
 						</div>
 					
 						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.9s">
 							<div class="service-item">
-								<a href="#">
+								<a>
 								<div class="service-icon">
 									<i class="fa fa-heart fa-3x"></i>
 								</div>
 								<h3>Support</h3>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+								<p>Online help from the staff.</p>
 								</a>							
 							</div>
 						</div>
@@ -318,7 +323,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 								<div class="testimonial-item text-center">
 									<i class="fa fa-desktop fa-3x"></i>
 									<div class="clearfix">
-										<span><p style="font-size:28px">Computer Science</p></span>
+										<span><p style="font-size:28px">COMPUTING</p></span>
 										<p>
 											The management of Computing systems and communication infrastructure is key to all organisations, 
 											businesses, and workplaces. If you are passionate about computers and IT systems or would like to 
@@ -331,23 +336,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 										</p>
 										</div>
 								</div>
-								<div class="testimonial-item text-center">
-									<i class="fa fa-wrench fa-3x"></i>
-									<div class="clearfix">
-										<span><p style="font-size:28px">Engineering</p></span>
-										<p>
-											Engineering courses are designed for people who enjoy problem solving, have an analytical mind and 
-											excel at finding creative solutions to issues that surround us. Qualifications in Engineering are 
-											highly coveted as they equip students with excellent skills, which can be transferred across sectors.
-										</p>
-										<br>
-										<p>
-											Engineering courses can lead to a variety of careers for students who also get the opportunity 
-											to specialise in the area of their choice, including Civil Engineering, Chemical Engineering or 
-											Mechanical Engineering among others.
-										</p>
-										</div>
-								</div>
+							
 								<div class="testimonial-item text-center">
 									<i class="fa fa-money fa-3x"></i>
 									<div class="clearfix">
@@ -360,33 +349,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 										<br>
 										<p>
 											Business courses can lead to a variety of careers for students who also get the opportunity 
-											to specialise in the area of their choice, including Business Management, Financial Management or 
-											Marketing Management.
+											to specialise in the area of their choice, including Business Management and Financial Management.
 										</p>	
 									</div>
 								</div>
-								<div class="testimonial-item text-center">
-									<i class="fa fa-building-o fa-3x"></i>
-									<div class="clearfix">
-										<span><p style="font-size:28px">Tourism and Hospitality MAnagement</p></span>
-										<p>
-											The goal of this program is to train students to manage, develop, and promote the tourism industry in 
-											particular regions and cultural sites. Core teaching focuses on a range of skills necessary to become 
-											an entrepreneur in the tourism sector: financing, regionally-focused marketing, public policy, targeting 
-											your audience, developing community-based strategies, implementing seasonal touristic programs, marketing 
-											heritage/tourism products, visitor satisfaction, and sustainable development.
-										</p>
-										<br>
-										<p>
-											The Tourism and Hospitality Ma nagement programme trains professional figures with qualified management career prospects in the foremost 
-											sectors of tourism, such as: Hospitality Management, Tourism and Hotel & Restaurant Management.
-										</p>	
-									</div>
-								</div>
+								
 								<div class="testimonial-item text-center">
 									<i class="fa fa-paint-brush fa-3x"></i>
 									<div class="clearfix">
-										<span><p style="font-size:28px">Architecture and fine arts</p></span>
+										<span><p style="font-size:28px">Design</p></span>
 										<p>
 											The Institute of Architecture and Fine Arts aims to be the center of excellence in architecture and fine arts. 
 											Nurturing the spirit of innovativeness and creativity, the Institute has produced students and graduates, 
@@ -395,7 +366,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 										<br>
 										<p>
 											The Master programme trains professional figures with qualified management career prospects in the foremost 
-											sectors of tourism, such as: Hospitality Management, Hotel and Restaurant Management.
+											sectors of tourism, such as: Animation, Multimedia Arts, and Fashion Design & Technology.
 										</p>
 									</div>
 								</div>
@@ -410,11 +381,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 			<section id="price">
 				<div class="container">
 					<div class="row">
-					
 						<div class="sec-title text-center wow animated fadeInDown">
 							<h2>Tuition Fees</h2>
 							<p>Prices are based on Regular Students only</p>
 						</div>
+					<?php if(isset($_SESSION["ID"])){ ?>
+						
 						
 						<div class="col-md-4 wow animated fadeInUp">
 							<div class="price-table text-center">
@@ -489,7 +461,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						</div>
 						
 						
-		
+					<?php } else {?>
+						<div class="col-md-8 col-md-offset-2 wow animated fadeInUp">
+							<div class="text-center">
+								<a href="#" class="btn btn-blue btn-effect"data-toggle="modal" data-target="#loginModal">
+									<span>Login to View Tuition Fees</span>
+								</a>
+							</div>
+						</div>
+					<?php } ?>
 					</div>
 				</div>
 			</section>
@@ -500,18 +480,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				<div class="overlay">
 					<div class="container">
 						<div class="row">
-						
 							<div class="sec-title text-center white wow animated fadeInDown">
 								<h2>FOLLOW US</h2>
 								<p>Beautifully simple follow buttons to help you get followers on</p>
 							</div>
-							
 							<ul class="social-button">
 								<li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-2x"></i></a></li>
 								<li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
 								<li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-dribbble fa-2x"></i></a></li>							
 							</ul>
-							
 						</div>
 					</div>
 				</div>
@@ -524,7 +501,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					<div class="row">
 						
 						<div class="sec-title text-center wow animated fadeInDown">
-							<h2>Contact</h2>
+							<h2>Comments & Suggestions</h2>
 							<p>Leave a Message</p>
 						</div>
 						
@@ -553,6 +530,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 								<p><i class="fa fa-pencil"></i>Unit #3020<span>Makati Executive Tower 1</span> <span>Dela Rosa St. </span><span>Makati</span></p><br>
 								<p><i class="fa fa-phone"></i>Phone: (052) 483-1210 </p>
 								<p><i class="fa fa-envelope"></i>brays_420@yahoo.com</p>
+								<h3>&nbsp;</h3>			
 							</address>
 						</div>
 			
@@ -610,11 +588,35 @@ google.maps.event.addDomListener(window, 'load', initialize);
 									<label class='control-label'>Remember Me</label>
 								</div>
 								<div class="col-sm-6" style="text-align: right;">
-									<label class='control-label'><a href='#'>Forgot Password?</a></label>
+									<label class='control-label'>
+										<a href="#" id="forgotbtn">Forgot Password?</a>
+									</label>
 								</div>
 							</div>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class='row'>
+							<div class="col-sm-12" id="successForgot" style="display: none;">
+								<h3 style="color: green;">Password Was Sent To Your Email</h3>
+							</div>
+							<div class="col-sm-12" id="inputForgot">
+								<div class="input-group">
+							    	<input type="text" id="forgotID" class="form-control" placeholder="ID/Username">
+							     	<span class="input-group-btn">
+							        	<button style="height: 50px; border: 1px solid #ececec;" id="btnReset" class="btn btn-primary" type="button">Send</button>
+							      	</span>
+   								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

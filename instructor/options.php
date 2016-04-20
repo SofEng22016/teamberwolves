@@ -30,7 +30,7 @@
 								<img src="../img/student-options/subjects2.jpg" class="img-responsive" alt="Lorem Ipsum is simply dummy text of the printing and typesetting ndustry.">
 								<figcaption class="mask">
 									<h3>Subjects</h3>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting ndustry. </p>
+									<p>View all of your subjects for this semester. </p>
 								</figcaption>
 							</li>
 							

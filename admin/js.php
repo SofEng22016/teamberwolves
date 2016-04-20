@@ -2,7 +2,11 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../dist/js/app.min.js"></script>
 <script src="../js/bootstrap-switch.js"></script>
+<?php if($opt!="Curriculum"){?>
 <script src="../js/bootstrap-select.js"></script>
+<?php }?>
+<script src="../js/fileinput.js"></script>
+<script src="../js/theme.js"></script>
 <script>
 $(function(argument) {
     $('#switch').bootstrapSwitch();
@@ -65,106 +69,42 @@ function timerIncrement() {
 </script>   
 <?php if($opt=="Overview"){?>
 <script src="../plugins/chartjs/Chart.min.js"></script>
+<?php 
+$con = mysql_connect("localhost", "root", "");
+$found = 0;
+if(! $con )
+{
+	die('Could not connect: ' . mysql_error());
+}
+$db = mysql_select_db("enrollment", $con);
+$query = "SELECT * FROM `students`";
+$result = mysql_query($query,$con);
+$cs = 0;
+$ba = 0;
+$bs = 0;
+while ($row = mysql_fetch_assoc($result)) {
+	if($row['Course']=='CS-SE' || $row['Course']=='CS-WD' || $row['Course']=='CS-GD'){
+		$cs++;	
+	}
+	else if($row['Course']=='BA-MMA' || $row['Course']=='BA-Anim' || $row['Course']=='BA-FD'){
+		$ba++;	
+	}
+	else if($row['Course']=='BS-MM' || $row['Course']=='BS-FM'){
+		$bs++;	
+	}
+}
+?>
 <script>
   $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
-    var areaChart = new Chart(areaChartCanvas);
-
-    var areaChartData = {
-      labels: ["January", "February", "March", "April", "May"],
-      datasets: [
-        {
-          label: "Tuition Payments",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "rgba(210, 214, 222, 1)",
-          pointColor: "rgba(210, 214, 222, 1)",
-          pointStrokeColor: "#c1c7d1",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65000, 59000, 80000, 0, 0, 0, 0]
-        },
-        {
-          label: "Miscellaneous Payments",
-          fillColor: "rgba(60,141,188,0.9)",
-          strokeColor: "rgba(60,141,188,0.8)",
-          pointColor: "#3b8bba",
-          pointStrokeColor: "rgba(60,141,188,1)",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [120000, 8000, 40000, 19000, 80600, 27000, 90000]
-        }
-      ]
-    };
-
-    var areaChartOptions = {
-      //Boolean - If we should show the scale at all
-      showScale: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: false,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "rgba(0,0,0,.05)",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: true,
-      //Boolean - Whether the line is curved between points
-      bezierCurve: true,
-      //Number - Tension of the bezier curve between points
-      bezierCurveTension: 0.3,
-      //Boolean - Whether to show a dot for each point
-      pointDot: false,
-      //Number - Radius of each point dot in pixels
-      pointDotRadius: 4,
-      //Number - Pixel width of point dot stroke
-      pointDotStrokeWidth: 1,
-      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-      pointHitDetectionRadius: 20,
-      //Boolean - Whether to show a stroke for datasets
-      datasetStroke: true,
-      //Number - Pixel width of dataset stroke
-      datasetStrokeWidth: 2,
-      //Boolean - Whether to fill the dataset with a color
-      datasetFill: true,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio: true,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive: true
-    };
-
-    //Create the line chart
-    areaChart.Line(areaChartData, areaChartOptions);
-
-   
-  });
-</script>
-<script>
-  $(function () {
-
-	
     "use strict";
     var donut = new Morris.Donut({
       element: 'sales-chart',
       resize: true,
       colors: ["#f39c12", "#dd4b39", "#00c0ef"],
       data: [
-        {label: "Computing", value: 7500},
-        {label: "Business", value: 6800},
-        {label: "Design", value: 11000}
+        {label: "Computing", value: <?php echo $cs;?>},
+        {label: "Business", value: <?php echo $bs;?>},
+        {label: "Design", value: <?php echo $ba;?>}
       ],
       hideHover: 'auto'
     });
@@ -193,7 +133,6 @@ else if($opt=="Mail"){?>
 		function sendMessage() {
 			var rec = $("#to").val();
 			var mes = $("#mes").val();
-			alert(mes);
 			Example.show("<h3>Message Sent</h3>");
 		}
 	</script>
@@ -307,6 +246,36 @@ else if($opt=="Calendar"){?>
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
+      eventClick: function(calEvent, jsEvent, view) {
+
+	        //alert('Event: ' + calEvent.title);
+            //alert(JSON.stringify(calEvent.start)); 
+            var str = JSON.stringify(calEvent.start);
+            var date = str.split("T");
+            var date2 = date[0].split("\"");
+            var date3 = date2[1].split("-");
+            date3[2]++;
+            var dte = "";
+            if(date3[2]<9){
+				dte = '0' + date3[2].toString();
+            }
+            else{
+            	dte = date3[2];
+            }
+            var finalDate = date3[0] + "," +  (date3[1]-1) + "," + dte;
+            /*alert(finalDate);
+            alert(calEvent.backgroundColor);
+    	    */
+			$.post("deleteevent.php", {
+			title: calEvent.title,
+			start: finalDate,
+			color: calEvent.backgroundColor
+			}, function(data) {
+			});
+    	    $('#calendar').fullCalendar('removeEvents', function (event) {
+    	        return event == calEvent;
+    	    });
+      },
       buttonText: {
         today: 'today',
         month: 'month',
@@ -314,12 +283,7 @@ else if($opt=="Calendar"){?>
         day: 'day'
       },
       //Random default events
-      events: [ {
-		   	title: 'test',
-		   	start: new Date(y,m,20),
-		   	backgroundColor: "green",
-		    borderColor: "green",
-		   },
+      events: [ 
                <?php
             		   $con = mysql_connect("localhost", "root", "");
             		   $db = mysql_select_db("enrollment", $con);
@@ -338,7 +302,7 @@ else if($opt=="Calendar"){?>
             		   <?php } mysql_close($con); ?>
                {
                    title: 'Chinese New Year',
-                   start: new Date(y, m, 8),
+                   start: new Date(y, 1, 8),
                    allDay: false,
                    backgroundColor: "#00c0ef",
                    borderColor: "#00c0ef"
@@ -509,6 +473,7 @@ $(document).ready(function(){
 			gender: gender,
 			id: id
 		}, function(data) {
+			Example.show("Successfully Edited Instructor");
 		});
 	});
 });
@@ -657,14 +622,7 @@ $(document).ready(function() {
 } );
   $(function () {
     $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
+    $('#example2').DataTable();
   });
 </script>
 <script src="../js/bb2.js"></script>
@@ -707,5 +665,9 @@ $(document).ready(function() {
     });
   });
 </script>
+<?php }
+else if ($opt=="Curriculum"){?>
+<script src="../js/example.js"></script>
+<script src="../js/bootbox.js"></script>
 <?php }?>
 

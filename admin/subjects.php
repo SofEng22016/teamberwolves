@@ -10,13 +10,16 @@
   						<a href="#list" aria-controls="list" role="tab" data-toggle="tab">List</a>
   					</li>
   					<li role="presentation">
-  						<a href="#addEdit" aria-controls="addEdit" role="tab" data-toggle="tab">Add Subject</a>
+  						<a href="#addEdit" aria-controls="addEdit" role="tab" data-toggle="tab">Insert Subject(Term)</a>
+  					</li><li role="presentation">
+  						<a href="#newSubj" aria-controls="newSubj" role="tab" data-toggle="tab">Add Subject(New)</a>
   					</li>
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="list">
 					<!-- TableStart -->
 						<div class="box-body">
+						<h3>Term</h3>
 							<table id="example1" class="table table-bordered table-striped">
 								<thead>
 									<tr>
@@ -42,23 +45,7 @@
                  ON `$table`.`ProfID` = `instructor`.`ID` ORDER BY `$table`.`SID` DESC";
                 $result = mysql_query($query,$con);
                 while ($row = mysql_fetch_assoc($result)) { ?>
-                					<tr 
-                					<?php 
-                					$count = 0;
-                					if($row['Count']!=NULL){
-                						$count = $row['Count'];
-                					}
-                					if($count<=20){
-                						echo "class='success'";
-                					}
-                					else if($count<=30){
-                						echo "class='warning'";
-                					}
-                					else{
-                						echo "class='danger'";
-                					}
-                					?>
-                					>
+                					<tr>
 										<td style="display: none;"><?php echo $row['SID']; ?></td>
 										<td><?php echo $row['SCode']; ?></td>
 										<td><?php echo $row['Subject Name']; ?></td>
@@ -85,6 +72,68 @@
 									</tr>
 								</tfoot>
 							</table>
+							<h3>All Subjects</h3>
+							<table id="example2" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+									
+        	          					<th style="display: none;">ID</th>
+										<th>Subject Code</th>
+										<th>Subject Name</th>
+										<th>Description</th>
+										<th>Lab</th>
+										<th>Lec</th>
+										<th>Requisites</th>
+									</tr>
+								</thead>
+								<tbody>
+								<?php 
+                $con = mysql_connect("localhost", "root", "");
+                $db = mysql_select_db("enrollment", $con);
+                $query = "SELECT * FROM `subject_info`";
+                $result = mysql_query($query,$con);
+                while ($row = mysql_fetch_assoc($result)) { ?>
+                					<tr>
+       									<td style="display: none;"><?php echo $row['ID']; ?></td>
+										<td><?php echo $row['SCode']; ?></td>
+										<td><?php echo $row['Subject Name']; ?></td>
+										<td><?php echo $row['Description']; ?></td>
+										<td><?php echo $row['Lab']; ?></td>
+										<td><?php echo $row['Lec']; ?></td>
+										<?php if($row['Requisite']!="0"){?>
+											<td>
+												<?php
+												$reqs = explode("-", $row['Requisite']);
+												for($x=0;$x<count($reqs);$x++){
+													$id = $reqs[$x];
+													$query3 = "SELECT * FROM `subject_info` WHERE `ID` = '$id'";
+													$result3 = mysql_query($query3,$con);
+													while ($row3 = mysql_fetch_assoc($result3)) {
+														echo $row3['SCode'];
+													}
+													if($x<count($reqs)-1){
+														echo ", ";	
+													}
+               									}?>
+											</td>
+										<?php } else {?>
+										<td>&nbsp;</td>
+										<?php } ?>
+									</tr>   
+                <?php }?>
+        	        			</tbody>
+        	        			<tfoot>
+        	        				<tr>
+        	          					<th style="display: none;">ID</th>
+										<th>Subject Code</th>
+										<th>Subject Name</th>
+										<th>Description</th>
+										<th>Lab</th>
+										<th>Lec</th>
+										<th>Requisites</th>
+									</tr>
+								</tfoot>
+							</table>
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane fade" id="addEdit">
@@ -94,7 +143,7 @@
             				<div class="col-md-8 col-md-offset-2">
               					<div class="box box-info">
             						<div class="box-header with-border">
-              							<h3 class="box-title" style=" display: block; text-align: center;">Add New Subject</h3>
+              							<h3 class="box-title" style=" display: block; text-align: center;">Insert New Subject</h3>
             						</div>
             						<form id="addStudent" name="form" role="form">
             							<div class="box-body">		
@@ -170,7 +219,7 @@
                 								</div>
                 								<div class="col-md-3">
                 								<label class="control-label">&nbsp;</label>
-                  									<input type="time" name="time" id="time" class="form-control" placeholder="Time">
+                  									<input type="time" name="time" id="time" step="900" class="form-control" placeholder="Time">
                 								</div>
               								</div>
               								<br>
@@ -182,7 +231,81 @@
                     								<input type="reset" class="btn btn-danger btn-block" value="Reset">
               									</div>
               									<div class="col-xs-6">
-                    								<a id="createStudent" href="#" data-bb="subject" class="btn btn-primary btn-block">Add Subject</a>
+                    								<a id="createStudent" href="#" data-bb="subject" class="btn btn-primary btn-block">Insert Subject</a>
+              									</div>
+              								</div>
+            							</div>
+            						</form>
+								</div>
+							</div>
+						</div>
+					<!--  -->
+					</div>
+					<div role="tabpanel" class="tab-pane fade" id="newSubj">
+						<!--  -->
+						<hr class="divider">
+            			<div class="row">
+            				<div class="col-md-8 col-md-offset-2">
+              					<div class="box box-info">
+            						<div class="box-header with-border">
+              							<h3 class="box-title" style=" display: block; text-align: center;">Add New Subject</h3>
+            						</div>
+            						<form name="form" role="form">
+            							<div class="box-body">		
+              								<div class="row">
+                								<div class="col-md-4">
+                								<label class="control-label">&nbsp;</label>
+                								<br>
+                  									<input type="text" id="code" class="form-control" placeholder="Subject Code">
+                								</div>
+              									<div class="col-md-8">
+                									<label class="control-label">&nbsp;</label>
+                  									<input type="text" id="name" class="form-control" placeholder="Subject Name">
+                								</div>
+              								</div>
+              								<div class="row">
+              									<div class=col-md-12>
+              									<label class="control-label">&nbsp;</label>
+                								<br>
+              									<input type="text" id="desc" class="form-control" placeholder="Description">
+              									</div>
+              								</div>
+              								<div class="row">
+              									<div class=col-md-2>
+              										<label class="control-label">&nbsp;</label>
+                									<br>
+              										<input type="number" id="lab" min="0" max="2"  class="form-control" placeholder="Lab">
+              									</div>
+              									<div class=col-md-2>
+              										<label class="control-label">&nbsp;</label>
+                									<br>
+              										<input type="number" min="0" max="12" id="lec" class="form-control" placeholder="Lec">
+              									</div>
+              									<div class=col-md-8>
+              										<label class="control-label">&nbsp;</label>
+                									<br>
+              										<select class="selectpicker" id="req" data-width="100%" title="Requisites" data-size="5" data-live-search="true" multiple>
+					<?php 
+					$db = mysql_select_db("enrollment", $con);
+					$query4 = "SELECT * FROM `subject_info`";
+					$result4 = mysql_query($query4,$con);
+					while ($row4 = mysql_fetch_assoc($result4)) {
+					?>
+						<option><?php echo $row4['SCode'];?></option>
+					<?php }?>
+				</select>
+              									</div>
+              								</div>
+              								<br>
+              						
+              								<!--  -->
+              								<br>
+              								<div class="row">
+              									<div class="col-xs-6">
+                    								<input type="reset" class="btn btn-danger btn-block" value="Reset">
+              									</div>
+              									<div class="col-xs-6">
+                    								<a id="createSubj" href="#" data-bb="subjectnew" class="btn btn-primary btn-block">Add Subject</a>
               									</div>
               								</div>
             							</div>

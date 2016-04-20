@@ -9,6 +9,40 @@
  $id = $_SESSION['ID'];
 $query = "UPDATE `messages` SET `isRead` = '1' WHERE `messages`.`ID` = '$mid';";
 $result = mysql_query($query,$con);
+
+$query = "SELECT * FROM `messages` WHERE `ID` = '$mid'";
+$result = mysql_query($query,$con);
+$sender = "";
+while ($row = mysql_fetch_assoc($result)) {
+	$sender = $row['Sender'];
+}
+
+$query2 = "SELECT * FROM `accounts` WHERE `ID` = '$sender'";
+$result2 = mysql_query($query2,$con);
+while ($row2 = mysql_fetch_assoc($result2)) {
+	$type = $row2['Type'];
+}
+if($type=="Student"){
+	$query3 = "SELECT * FROM `students` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['FName']." ".$row3['LName'];
+	}
+}
+else if($type=="Prof"){
+	$query3 = "SELECT * FROM `instructor` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['FName']." ".$row3['LName'];
+	}
+}
+else if($type=="Admin"){
+	$query3 = "SELECT * FROM `admin` WHERE `ID` = '$sender'";
+	$result3 = mysql_query($query3,$con);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$name = $row3['Name'];
+	}
+}
  $query = "SELECT * FROM `messages` WHERE `ID` = '$mid'";
  $result = mysql_query($query,$con);
  while ($row = mysql_fetch_assoc($result)) {
@@ -28,7 +62,7 @@ $result = mysql_query($query,$con);
             <div class="box-body no-padding">
               <div class="mailbox-read-info">
                 <h3><?php echo $row['Subject'];?></h3>
-                <h5>From: support@almsaeedstudio.com
+                <h5>From: <a href="#"><?php echo $name; ?> <<?php echo $row['Sender'];?>> </a>
                   <span class="mailbox-read-time pull-right"><?php echo $row['Date'];?></span></h5>
               </div>
               <!-- /.mailbox-read-info -->

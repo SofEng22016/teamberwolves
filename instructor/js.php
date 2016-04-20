@@ -66,8 +66,46 @@ function timerIncrement() {
   });
 </script>
 <?php }
-else if($opt=="Mail"){?>
-            
+//Split Mail and Resources
+else if($opt=="Mail" || $opt=="Resources" || $opt=="Announcement" || $opt=="Subjects"){?>
+  
+<script>
+$("#sendAnnouncementAll").click(function(){
+	var to = 'All';
+	var mes = $("#mesAll").val();
+	var sub = $("#subAll").val();
+	var col = $("#colorAll").val();
+	var ico = $("#iconAll").val();
+	var ProfID = $("#ProfID").val();
+	$.post("sendannouncement.php", {
+		to: to,
+		mes: mes,
+		sub: sub,
+		col: col,
+		ico: ico,
+		ProfID: ProfID
+	}, function(data) {
+		Example.show("<h4>Announcement Sent</h4>");
+	});
+});
+$("#sendAnnouncementSec").click(function(){
+	var to = $("#toSec").val();
+	var mes = $("#mesSec").val();
+	var sub = $("#subSec").val();
+	var col = $("#colorSec").val();
+	var ico = $("#iconSec").val();
+	$.post("sendannouncement.php", {
+		to: to,
+		mes: mes,
+		sub: sub,
+		col: col,
+		ico: ico
+	}, function(data) {
+		Example.show("<h4>Announcement Sent</h4>");
+	});
+});
+</script>
+          
 <!-- CK Editor -->
 <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -93,6 +131,22 @@ else if($opt=="Mail"){?>
 			Example.show("<h3>Message Sent</h3>");
 		}
 	</script>
+	<script>
+                function saveGrades() {
+                <?php for($x=0;$x<$count;$x++){ ?>
+            		var gradeID = $("#gradeID<?php echo $x;?>").val();
+            		var mgrade = $("#midterm<?php echo $x;?>").val();
+					var fgrade = $("#final<?php echo $x;?>").val();
+    				$.post("savegrade.php", {
+    					gradeID: gradeID,
+    					mgrade: mgrade,
+    					fgrade: fgrade
+    				}, function(data) {
+    					Example.show("<h4>Grades Saved</h4>");
+    				});
+                <?php } ?>
+                }
+                </script>
     <script>
         $(function () {
             Example.init({
@@ -476,12 +530,15 @@ function searchIns() {
     		{
     			die('Could not connect: ' . mysql_error());
     		}
+    		$id = $_SESSION['ID'];
     		$db = mysql_select_db("enrollment", $con);
-    		$query = "SELECT * FROM `tempsubjects` WHERE `ID` = '$id' ";
+    		$query = "SELECT * FROM `subject12016` WHERE `ProfID` = '$id' ";
     		$result = mysql_query($query,$con);
     		$subjects = array();
+    		$counter = 0;
     		while ($row = mysql_fetch_assoc($result)) {
-    			$subjects = explode("-", $row['Subjects']);
+    			$subjects[$counter] = $row['SID'];
+    			$counter++;
     		}
     		$subjectInfo = array(array());
     		$dys = array("","M","T","W","TH","F","S");
@@ -544,9 +601,9 @@ function searchIns() {
         		   					{
         		               		   	title: '<?php echo $subjectInfo[$i][0];?>',
         		               		   	start: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][2].",".$subjectInfo[$i][3]?>),
-        		               		   	<?php if($row['End']!=''){?>
+        		               		  
         		   						end: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][4].",".$subjectInfo[$i][3]?>),
-        		               		   	<?php }?>
+        		               		
         		               		   	backgroundColor: "#00c0ef",
         		               		    borderColor: "#00c0ef",
         		               		   },

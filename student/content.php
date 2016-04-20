@@ -25,7 +25,7 @@ switch ($opt) {
 		echo "Applications-Content";
 		break;
 	case "Subjects":
-		echo "Subjects-Content";
+		include 'subjects.php';
 		break;
 	case "Curriculum":
 		echo "Curriculum-Content";

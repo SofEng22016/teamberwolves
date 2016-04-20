@@ -1,17 +1,18 @@
 <header class="main-header">
-
-    <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>my</b>P</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>my</b>PAGE</span>
     </a>
-
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
+      	<b class="logo" style="text-align : center; display: block;position: absolute;
+    background: none;
+    width: 80%;
+    left: 0;
+    text-align: center;
+    margin: auto;"><?php echo $_SESSION["Type"];?></b>
       <!-- Sidebar toggle button-->
-      
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
@@ -23,7 +24,7 @@
               <?php 
 function tme ($time)
 {
-	$time = (mktime() - $time) + (3600*7); // to get the time since that moment
+	$time = (mktime() - $time); // to get the time since that moment
 	$time = ($time<1)? 1 : $time;
 	$tokens = array (
 			31536000 => 'year',
@@ -52,9 +53,14 @@ $id = $_SESSION['ID'];
 $query = "SELECT * FROM `messages` WHERE `Recipient` = '$id' AND `isRead` ='0'";
 $result = mysql_query($query,$con);
 $new = mysql_num_rows($result);
+$query = "SELECT * FROM `announcements` WHERE `UserID` = '$id' AND `isRead` ='0'";
+$result = mysql_query($query,$con);
+$announcements = mysql_num_rows($result);
 mysql_close($con);
+if($new>0){
 ?>
               <span class="label label-success"><?php echo $new;?></span>
+              <?php } ?>
             </a>
             <ul class="dropdown-menu">
               <li class="header">You have <?php echo $new;?> new messages</li>
@@ -147,57 +153,46 @@ else if($type=="Admin"){
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <?php if($announcements>0){?>
+              <span class="label label-warning"> <?php echo $announcements;?></span>
+              <?php } ?>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">Notifications</li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
+                <?php
+                $id = $_SESSION['ID'];
+$con = mysql_connect("localhost", "root", "");
+
+$db = mysql_select_db("enrollment", $con);
+$query = "SELECT * FROM `Announcements` WHERE `UserID` = '$id'";
+$result = mysql_query($query,$con);
+$titles = array();
+$messages = array();
+$icons = array();
+$colors = array();
+$ids = array();
+$counter = 0;
+while ($row = mysql_fetch_assoc($result)) {
+$titles[$counter] = $row['Title'];
+$ids[$counter] = $row['ID'];
+$messages[$counter] = $row['Message'];
+$icons[$counter] = $row['Icon'];
+$colors[$counter] = $row['Color'];
+	
+	?>
                   <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    <a href="#" data-toggle="modal" data-target="#announcementModal<?php echo $counter;?>">
+                      <i class="fa <?php echo $row['Icon'];?> text-<?php echo $row['Color'];?>"></i> 
+                      <?php echo $row['Title'];?>
+                      
                     </a>
                   </li>
+                  <?php $counter++;}mysql_close($con); ?>
                   <!-- end notification -->
                 </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- Inner menu: contains the tasks -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <!-- Task title and progress text -->
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <!-- The progress bar -->
-                      <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
               </li>
             </ul>
           </li>
@@ -222,17 +217,7 @@ else if($type=="Admin"){
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Subjects</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Clubs</a>
-                  </div>
-                </div>
+               
                 <!-- /.row -->
               </li>
               <li class="user-footer">

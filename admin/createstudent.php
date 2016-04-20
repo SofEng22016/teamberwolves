@@ -20,7 +20,8 @@ if(! $con )
 }
 $db = mysql_select_db("enrollment", $con);
 $dte = date('Y');
-$curriculum = $course."-".$dte[2].$dte[3].$dte[2].($dte[3]+1);
+$rest = substr($course, 3, 6);
+$curriculum = $rest."-".$dte[2].$dte[3].($dte[2]-1).$dte[3];
 $query2 = "INSERT INTO `students` 
 (`ID`, `FName`, `MName`, `LName`, `Birthdate`, `Gender`, `Age`, `Year`, `Course`, `Curriculum`, `Picture`, `Subjects`, `Status`)
  VALUES ('$ID', '$fname', '$mname', '$lname','$birthdate', '$gender', '$age','$year','$course','$curriculum','','','Pending');";
@@ -28,5 +29,14 @@ $result2 = mysql_query($query2,$con);
 $query3 = "INSERT INTO `accounts` (`ID`, `email`, `Type`, `Password`)
 VALUES ('$ID', '$email', 'Student', '$mname');";
 $result3 = mysql_query($query3,$con);
+
+$query4 = "INSERT INTO `contact` (`ID`, `Country`, `Province`, `City`, `Street`, `mobile`) 
+		VALUES ('$ID', 'Country', 'Province', 'City`, 'Street', '123456');";
+$result4 = mysql_query($query4,$con);
+
+//INSERT INTO `tempsubjects` (`ID`, `Subjects`) VALUES ('123', ' ');
+
+$query4 = "INSERT INTO `tempsubjects` (`ID`, `Subjects`) VALUES ('$ID', ' ');";
+$result4 = mysql_query($query4,$con);
 mysql_close($con);
 ?>

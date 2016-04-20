@@ -1,4 +1,4 @@
-<div id="bbox" class="bb-alert alert alert-info" style="display:none; left: 80%; bottom: 10%;">
+<div id="bbox" class="bb-alert alert alert-info" style="display:none; left: 40%; right: 40%; bottom: 60%;">
         <span>The examples populate this alert with dummy content</span>
 </div>
 <section class="content">
@@ -11,9 +11,6 @@
   					</li>
   					<li role="presentation">
   						<a href="#addEdit" aria-controls="addEdit" role="tab" data-toggle="tab">Add Student</a>
-  					</li>
-  					<li role="presentation" class="disabled">
-  						<a href="#info" aria-controls="info" role="tab" data-toggle="tab">Search / Edit / Delete</a>
   					</li>
 				</ul>
 				<div class="tab-content">
@@ -34,94 +31,28 @@
 										<th>Year</th>
 										<th>Type</th>
 										<th>Course</th>
-										<th>Status</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>2010479131</td>
-										<td>Bryce Francis Quintano Deyto</td>
-										<td>1994-02-07</td>
-										<td>22</td>
-										<td>Male</td>
-										<td>Second Year</td>
-    		        	      			<td>Regular</td>
-            			      			<td>BS-CS-SE</td>
-            	    		  			<td><span class='label label-info'>BRYCE</span></td>
-            	   					</tr>
- 		           	    <?php include 'names.php';
-            	    for($x=1;$x<=rand(100, 200);$x++){
-               	 	$nme = "";
-               	 	$gen = rand(0, 1);
-               	 	$scnd = rand(0, 1);
-              	  	$stat = rand(0, 10);
-               	 	$type = rand(0, 10);
-               	 	$yr =  rand(1990, 1998);
-               	 	$mnth =  rand(1, 12);
-                	$dy =  rand(1, 28);
-               	 	$birthDate = $yr."-".$mnth."-".$dy;
-               	 	$birthDate2 = $yr."-".$mnth."-".$dy;
-               	 	$years = array("First","Second","Third","Fourth");
-               	 	$year = $years[rand(0, 3)]." Year";
-               	 	$courses = array("CS-SE","GD","IT-WD","Anim","MMA","FD","BA-FM","BA-MA");
-               	 	$course = $courses[rand(0, 7)];
-               	 	$birthDate = explode("-", $birthDate);
-               	 	$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[2], $birthDate[1], $birthDate[0]))) > date("md")
-               	 			? ((date("Y") - $birthDate[0]) - 1)
-               	 			: (date("Y") - $birthDate[0]));
-               	 	$id = 2012 + rand(0, 3);
-               	 	$id *= 1000000;
-               	 	for($a=0;$a<6;$a++){
-               	 		$mult = 1;
-               	 		for($b=0;$b<$a;$b++){
-              	 	 			$mult *= 10;
-               	 		}
-                			$id += ( rand(1, 9) * ($mult));
-                		}
-               	 	for($y=0;$y<$scnd+1;$y++){
-               	 		$nme .= $name[$gen][rand(0, count($name[$gen])-1)];
-               	 		$nme .= " ";
-               	 	}
-               	 	$nme .= $name[2][rand(0, count($name[2])-1)];
-               	 	if($gen==0){
-                		$gen = "Female";
-               	 	}
-               	 	else{
-               	 		$gen = "Male";
-              	  	}
-               	 	if($type==0){
-               	 		$type = "Transferee";
-                	}
-               	 	else if($type>1 && $type<4){
-               	 		$type = "Irregular";
-              	  	}
-               	 	else{
-               	 		$type = "Regular";
-                	}
-               	 	
+ 		           	    <?php $con = mysql_connect("localhost", "root", "");
+                if(! $con )
+                {
+                	die('Could not connect: ' . mysql_error());
+                }
+                $db = mysql_select_db("enrollment", $con);
+                $query = "SELECT * FROM `students`";
+                $result = mysql_query($query,$con);
+                while ($row = mysql_fetch_assoc($result)) {
                	 ?>
         		   	    	 		<tr>
-               				   			<td><a href="#"><?php echo $id; ?></a></td>
-              	   			 			<td><?php echo $nme; ?></td>
-               	   						<td><?php echo $birthDate2; ?></td>
-               		  					<td><?php echo $age; ?></td>
-               	   						<td><?php echo $gen; ?></td>
-               				  			<td><?php echo $year;?></td>
-               	  						<td><?php echo $type;?></td>
-               			  				<td><?php echo $course;?></td>
-               		  <?php 
-               		  echo "<th>";
-              	 	  if($stat==0){
-              	 	  	echo "<span class='label label-danger'>Disabled</span>";
-               		  }
-               		  else if($stat>1 && $stat<4){
-               		  	echo "<span class='label label-warning'>Pending</span>";
-               		  }
-               		  else{
-               		  	echo "<span class='label label-success'>Activated</span>";
-              	 	  }
-               		  "</th>";
-               	  ?>
+               				   			<td><a href="#"><?php echo $row['ID']; ?></a></td>
+              	   			 			<td><?php echo $row['FName']." ".$row['MName']." ".$row['LName']; ?></td>
+               	   						<td><?php echo $row['Birthdate']; ?></td>
+               		  					<td><?php echo $row['Age']; ?></td>
+               	   						<td><?php echo $row['Gender']; ?></td>
+               				  			<td><?php echo $row['Year'];?> Year</td>
+               	  						<td><?php echo $row['Course'];?></td>
+               			  				<td><?php echo $row['Status'];?></td>
       		        	  			</tr>
         	        		<?php  } ?>
         	        				</tbody>
@@ -135,7 +66,6 @@
         	       	  						<th>Year</th>
         	       	  						<th>Type</th>
         	       	  						<th>Course</th>
-        	       	  						<th>Status</th>
 										</tr>
 								</tfoot>
 							</table>
@@ -187,10 +117,31 @@
               								<!--  -->
               								<div class="row">
               									<div class="col-xs-4">
-                  									<input type="text" name="courseval" id="courseval" class="form-control" placeholder="Course">
+              										<select class="selectpicker" name="courseval" id="courseval" data-width="100%" title="Course" data-size="5" data-live-search="true">
+              											<optgroup label="Computing" data-max-options="1">
+                  											<option data-tokens="CS SE CS-SE Soft Eng Software Engineering" value="CS-SE">Software Engineering</option>
+                  											<option data-tokens="CS WD CS-WD Web Dev Website Development" value="CS-WD">Website Development</option>
+                  											<option data-tokens="CS GD CS-GD Game Dev Game Engineering" value="CS-GD">Game Development</option>
+                  											</optgroup>
+              											<optgroup label="Design" data-max-options="1">
+                  											<option data-tokens="BA MMA Multimedia Arts" value="BA-MMA">Multimedia Arts</option>
+                  											<option data-tokens="BA Animation" value="BA-Anim">Animation</option>
+                  											<option data-tokens="BA Fas Des Design Fashion" value="BA-FD">Fashion Design</option>
+                  											</optgroup>
+              											<optgroup label="Business" data-max-options="1">
+                  											<option data-tokens="BS-MM Marketing Management" value="BS-MM">Marketing Management</option>
+                  											<option data-tokens="BS-FM Financial Management" value="BS-FM">Financial Management</option>
+                  											</optgroup>
+                  										<!-- Courses -->
+                  									</select>
                 								</div>
                 								<div class="col-xs-4">
-                  									<input type="text" name="yearval" id="yearval" class="form-control" placeholder="Year Level">
+                  									<select class="selectpicker" name="yearval" id="yearval" data-width="100%" title="Year Level" data-size="5" data-live-search="true">
+                  										<option data-tokens="1 First" value="First">First</option>
+                  										<option data-tokens="2 Second" value="Second">Second</option>
+                  										<option data-tokens="3 Third" value="Third">Third</option>
+                  										<option data-tokens="4 Fourth" value="Fourth">Fourth</option>
+                  									</select>
                 								</div>
                 								<div class="col-xs-4">
                   									<input type="date" name="birthval" id="birthval" class="form-control">

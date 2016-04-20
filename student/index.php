@@ -14,7 +14,8 @@
 				  include 'content.php'; ?>
 		</div>
 		<?php include 'foot.php';
-			  include 'js.php'; ?>
+			  include 'js.php';
+			  include 'announcementmodals.php'; ?>
 		</div>
 	</body>
 </html>

@@ -87,5 +87,12 @@ else{
 	$query = "UPDATE `tempsubjects` SET `Subjects` = '$line' WHERE `tempsubjects`.`ID` = '$id';";
 }
 $result = mysql_query($query,$con);
+$gradesID = explode("-",$line);
+for($x=0;$x<count($gradesID);$x++){
+	$grade = $gradesID[$x].$id;
+	$query = "INSERT INTO `grades` (`ID`, `Midterm`, `Final`) VALUES ('$grade', '0', '0');";
+	$result = mysql_query($query,$con);
+}
+
 mysql_close($con);
 ?>

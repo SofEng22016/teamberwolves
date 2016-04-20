@@ -10,9 +10,6 @@
   			<li role="presentation">
   				<a href="#addEdit" aria-controls="addEdit" role="tab" data-toggle="tab">Add / Edit / Delete</a>
   			</li>
-  			<li role="presentation" class="disabled">
-  				<a href="#info" aria-controls="info" role="tab" data-toggle="tab">Information</a>
-  			</li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="list">
@@ -53,36 +50,7 @@
 							</tr>
                 
                 <?php }?>
-<?php include 'names.php';
-for($x=1;$x<=rand(100, 200);$x++){
-	$nme = "";
-    $gen = rand(0, 1);
-    $scnd = rand(0, 1);
-    $id = 0;
-    for($a=0;$a<10;$a++){
-    	$mult = 1;
-        for($b=0;$b<$a;$b++){
-        	$mult *= 10;
-        }
-        $id += ( rand(1, 9) * ($mult));
-    }
-    for($y=0;$y<$scnd+1;$y++){
-    	$nme .= $name[$gen][rand(0, count($name[$gen])-1)];
-        $nme .= " ";
-    }
-    $nme .= $name[2][rand(0, count($name[2])-1)];
-    if($gen==0){
-    	$gen = "Female";
-    }
-    else{
-        $gen = "Male"; } ?>
-							<tr>
-      		            		<td><?php echo $id; ?></td>
-          		        		<td><?php echo $nme; ?></td>
-       			           		<td><?php echo $gen; ?></td>
-            		    	</tr>
-                <?php  } ?>
-                		</tbody>
+
                 		<tfoot>
                 			<tr>
                   				<th>ID</th>

@@ -21,6 +21,7 @@ else{
 	while ($row = mysql_fetch_assoc($result)) {
 		if($password!=$row['Password']){
 			echo "Incorrect";
+			session_unset();
 		}
 		else{
 			$ID = $row['ID'];
@@ -31,6 +32,7 @@ else{
 					$_SESSION["ID"] = $row2['ID'];
 					$_SESSION["Name"] = $row2['FName']." ".$row2['LName'];
 					$_SESSION["Type"] = "Guest";
+					echo $_SESSION["Type"];
 				}
 			}
 			else if($row['Type']=="Student"){
@@ -76,7 +78,7 @@ else{
 					else{
 						$_SESSION["Picture"] = strtolower($row2['Gender']).".jpg";
 					}
-					$_SESSION['expire'] = time() + 30;
+					$_SESSION['expire'] = time() + 300;
 					echo $_SESSION["Type"];
 				}
 			}

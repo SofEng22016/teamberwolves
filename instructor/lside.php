@@ -62,8 +62,7 @@
         <li><a href="javascript:{}" onclick="document.getElementById('optnav').submit();"><i class="fa fa-link"></i><span>Options</span></a></li>
         <li><a href="javascript:{}" onclick="document.getElementById('mailnav').submit();"><i class="fa fa-envelope"></i><span>Mail</span></a></li>
         <li><a href="javascript:{}" onclick="document.getElementById('calnav').submit();"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
-		<li><a href="javascript:{}" onclick="document.getElementById('setnav').submit();"><i class="fa fa-gear"></i><span>Settings</span></a></li>
-		<li class="header"><?php echo "$opt";?></li>
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>

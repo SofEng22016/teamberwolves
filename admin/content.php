@@ -25,7 +25,7 @@ switch ($opt) {
 		include 'curriculum.php';
 		break;
 	case "Finance":
-		echo "Finance-Content";
+		include 'finance.php';
 		break;
 	default:
 		include 'options.php';

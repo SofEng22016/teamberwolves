@@ -1,6 +1,7 @@
 <div id="bbox" class="bb-alert alert alert-info" style="display:none; left: 80%; bottom: 10%;">
         <span>The examples populate this alert with dummy content</span>
 </div>
+<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
@@ -117,7 +118,7 @@
                 $db = mysql_select_db("enrollment", $con);
                 $query4 = "SELECT DISTINCT `subject_info`.`SCode`,`Count`,`Subject Name` FROM `subject12016` JOIN `subject_info` ON `subject12016`.`SCode` = `subject_info`.`SCode` where `Count` < '40'";
                 $result4 = mysql_query($query4,$con);
-                while ($row4 = mysql_fetch_assoc($result4)) { ?>
+                while ($row4 = mysql_fetch_assoc($result4)) { $a=0; ?>
                 <!-- --------------------------------------------------------------------------------- -->
   					<div class="panel panel-default">
     					<div class="panel-heading" role="tab" id="<?php echo $row4['SCode'];?>heading">
@@ -132,8 +133,9 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
+											<th>&nbsp;</th>
 											<th>Subject Code</th>
-											<th>Subject Name</th>
+											<th>Section</th>
 											<th>Units</th>
 											<th>Room</th>
 											<th>Time</th>
@@ -146,26 +148,67 @@
 									$sec = $row4['SCode'];
                 					$query2 = "SELECT * FROM `subject12016` JOIN `instructor` ON `subject12016`.`ProfID` = `instructor`.`ID` JOIN `subject_info` ON `subject12016`.`SCode` = `subject_info`.`SCode` WHERE `subject_info`.`SCode` = '$sec'";
                 					$result2 = mysql_query($query2,$con);
-                					$subjectsRadio = array();
-                					while ($row2 = mysql_fetch_assoc($result2)) { 
+                					$subj = "";
+                					$counter = 0;
+                					while ($row2 = mysql_fetch_assoc($result2)) {	 
+                					$subj = $row2['SID'].$row2['SCode'];
                 					$blockResult .= $row2['SID']."-"?>
                 						<tr>
+                							<td>
+                								<div class="radio radio-success">
+                                					<input type="radio" name="<?php echo $row2['Subject Name'];?>" id="<?php echo $row2['SCode'].$counter;?>" value="<?php echo $row2['SID'];?>" <?php if($a==0){?> checked <?php } ?>>
+                              	  					<label for="radio3"></label>
+                            					</div>
+                            				</td>
                 							<td><?php echo $row2['SCode'];?></td>
-                							<td><?php echo $row2['Subject Name'];?></td>
+                							<td><?php echo $row2['Section'];?></td>
                 							<td><?php echo $row2['Lab']+$row2['Lec'];?></td>
                 							<td><?php echo $row2['Room'];?></td>
                 							<td><?php echo $row2['Time'];?></td>
                 							<td><?php echo $row2['Day'];?></td>
                 							<td><?php echo $row2['FName']." ".$row2['MName']." ".$row2['LName']." ";?></td>
                 						</tr>
-                					<?php }?>
+                					<?php $counter++;}?>
 									</tbody>
 								</table>
+								<input type="button" id="btn<?php echo $subj;?>" class="btn btn-block btn-primary" value="Add">
+								<script>
+								$("#btn<?php echo $subj;?>").click(function(){
+									var selected = '';
+									var id = '<?php echo $_SESSION['ID'];?>';
+									for (var i = 0; i < <?php echo $counter?>; i++ ) { 
+										if ($("#<?php echo $row4['SCode'];?>"+i).prop("checked")) {
+											selected =  $("#<?php echo $row4['SCode'];?>"+i).val();
+										}
+									}
+									$.post("addfreesubject.php", {
+										id: id,
+										selected: selected
+									}, function(data) {
+										$('#bbox').removeClass('alert-danger');
+							        	$('#bbox').addClass('alert-info');
+										if(data == 'Exceed'){
+											$('#bbox').removeClass('alert-info');
+								        	$('#bbox').addClass('alert-danger');
+											Example.show('Student has already exceeded the max number of units available');
+										}
+										else if(data == 'Success'){
+											Example.show('Subject Added = ' + selected);
+										}
+										else{
+											$('#bbox').removeClass('alert-info');
+								        	$('#bbox').addClass('alert-danger');
+											Example.show('Conflict Found : ' + data);
+										}
+										
+									});
+								});
+								</script>
       						</div>
     					</div>
   					</div>
                 <!-- --------------------------------------------------------------------------------- -->
-                <?php } ?>
+                <?php $a++;} ?>
                 		<br>
 						<div class="row">
               				<div class="col-xs-6">
@@ -392,94 +435,120 @@
 				<h2 class="modal-title" id="myModalLabel"><b>Assessment Summary</b></h2>
 			</div>
 			<div class="modal-body">
-				<table class="table table-hover">
-					<tbody>
-						<tr>
-							<td>Tuition Fee</td>
-							<td>PHP <?php echo number_format($tlec * 1950); ?></td>
-						</tr>
-						<tr>
-							<td>Laboratory Fee</td>
-							<td>PHP <?php echo number_format($tlab * 3500); ?></td>
-						</tr>
-						<tr>
-							<td>
-								<a role="button" data-toggle="collapse" class="misc" data-parent="#accordion" href=".misc" aria-expanded="true" aria-controls="collapseOne">
-									Miscalleneous Fee
-								</a>		
-							</td>
-							<td>
-								<a role="button" data-toggle="collapse" class="misc" data-parent="#accordion" href=".misc" aria-expanded="true" aria-controls="collapseOne">
-									PHP 15,600
-								</a>
-							</td>
-						</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="SE11heading">
+        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#SE11" aria-expanded="true" aria-controls="collapseOne">
+          						Tuition Fee
+          					</a>
+          					<a style="text-align: right; float:right;">
+          						PHP <?php echo number_format($tlec * 1950); ?>
+          					</a>
+   	 					</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="SE11heading">
+        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#SE11" aria-expanded="true" aria-controls="collapseOne">
+          						Laboratory Fee
+          					</a>
+          					<a style="text-align: right; float:right;">
+          						PHP <?php echo number_format($tlab * 3500); ?>
+          					</a>
+   	 					</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="mischeading">
+        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#misc" aria-expanded="true" aria-controls="collapseOne">
+          						Miscalleneous Fee
+          					</a>
+          					<a style="text-align: right; float:right;">
+          						PHP 15,600
+          					</a>
+   	 					</div>
+    					<div id="misc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="mischeading">
+    						<table class="table table-hover">
+								<tbody>
+        				<tr>
         					<td>  Athletic Fee</td>
         					<td>PHP 500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Auidio Visual</td>
         					<td>PHP 1,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Energy Fee</td>
         					<td>PHP 3,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Guidance Fee</td>
         					<td>PHP 1,000</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Health Services</td>
         					<td>PHP 600</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  ID Validation</td>
         					<td>PHP 100</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Insurance</td>
         					<td>PHP 100</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Internet</td>
         					<td>PHP 1,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Library Fee</td>
         					<td>PHP 1,200</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Learning Materials</td>
         					<td>PHP 1,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Registration</td>
         					<td>PHP 500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Student Activity</td>
         					<td>PHP 1,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Student Development</td>
         					<td>PHP 1,500</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Student Organization</td>
         					<td>PHP 400</td>
         				</tr>
-						<tr id="collapseOne" class="panel-collapse collapse misc" role="tabpanel" aria-labelledby="headingOne">
+        				<tr>
         					<td>  Student Publication</td>
         					<td>PHP 200</td>
         				</tr>
-						<tr>
-							<th>Total Fee</th>
-							<th>PHP <?php echo number_format($totalAmount);?></th>
-						</tr>
-					</tbody>
-				</table>
+        				<tr>
+        					<th>  Total Miscalleneous</th>
+        					<th>PHP 15,600</th>
+        				</tr>
+								</tbody>
+							</table>
+    					</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="SE11heading">
+							<b>
+	        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#SE11" aria-expanded="true" aria-controls="collapseOne">
+	          						Total Fee
+	          					</a>
+	          					<a style="text-align: right; float: right;">
+	          						PHP <?php echo number_format($totalAmount);?>
+	          					</a>
+	          				</b>
+	   	 				</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

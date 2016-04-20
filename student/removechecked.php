@@ -34,4 +34,10 @@ for($x=0;$x<count($tempSubjects);$x++){
 echo $checked;
 $query = "UPDATE `tempsubjects` SET `Subjects` = '$line' WHERE `tempsubjects`.`ID` = '$id';";
 $result = mysql_query($query,$con);
+
+for($i=0;$i<count($checkedSubjects);$i++){
+	$gradeID = $checkedSubjects[$i].$id;
+	$query = "DELETE FROM `grades` WHERE `grades`.`ID` = '$gradeID';";
+	$result = mysql_query($query,$con);
+}
 ?>

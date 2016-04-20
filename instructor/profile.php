@@ -11,20 +11,27 @@
               <h3 class="profile-username text-center"><?php echo $_SESSION["Name"];?></h3>
 
               <p class="text-muted text-center">Student</p>
-
+<?php 
+$con = mysql_connect("localhost", "root", "");
+$db = mysql_select_db("enrollment", $con);
+$id = $_SESSION['ID'];
+$query = "SELECT * FROM `students` WHERE `ID` = '$id'";
+$result = mysql_query($query,$con);
+while ($row = mysql_fetch_assoc($result)) {
+ 
+?>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Year Level</b> <a class="pull-right">2nd Year</a>
+                  <b>Year Level</b> <a class="pull-right"><?php echo $row['Year'];?> Year</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Type</b> <a class="pull-right">Regular</a>
+                  <b>Status</b> <a class="pull-right"><?php echo $row['Year'];?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Age</b> <a class="pull-right">22</a>
+                  <b>Age</b> <a class="pull-right"><?php echo $row['Age'];?></a>
                 </li>
               </ul>
-
-              <a href="#" class="btn btn-primary btn-block"><b>Edit</b></a>
+			  <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#profileModal"><b>Edit</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -86,3 +93,55 @@
       <!-- /.row -->
 
     </section>
+    <?php } ?>
+    
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h2 class="modal-title" id="myModalLabel"><b>Login</b></h2>
+						</div>
+					<form id="loginForm" class="form-horizontal" data-toggle="validator" name="form" role="form">
+						<div class="modal-body">
+							<div id="errorControl" class='form-group' style="display: none;">
+								<div class="col-sm-10">
+									<label class='control-label' id="NotFound" style="text-align: left; color: red; display: none;">
+										<b>User Not Found</b>
+									</label>
+									<label class='control-label' id="Incorrect" style="text-align: left; color: red; display: none;">
+										<b>Incorrect Password</b>
+									</label>
+								</div>
+							</div>
+							<div class='form-group has-feedback'>
+								<div class="col-sm-12">
+										<input type="text" data-toggle="validator" class="form-control" id="user" placeholder="Username/ID Number" required>
+       								 <span class="fa fa-user fa-2x form-control-feedback"></span>
+								</div>
+							</div>
+							<div class='form-group has-feedback'>
+								<div class="col-sm-12">
+									<input type="password" data-toggle="validator" class="form-control" id="pass" placeholder="Password" required>
+       								 <span class="fa fa-lock fa-2x form-control-feedback"></span>
+								</div>
+							</div>
+							<input id="submitLogin" type="button" class="btn btn-primary btn-block" value="Login"/>
+						</div>
+						<div class="modal-footer" style="text-align: left; padding: 0px 15px 0px 15px;">
+							<div class='form-group' style="font-size: 13px;">
+								<div class="col-sm-6">
+									<input type="checkbox" id="remember">
+									<label class='control-label'>Remember Me</label>
+								</div>
+								<div class="col-sm-6" style="text-align: right;">
+									<label class='control-label'><a href='#'>Forgot Password?</a></label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

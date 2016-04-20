@@ -6,7 +6,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../accounts/<?php echo $_SESSION["Picture"];?>" class="img-circle" alt="User Image">
+          <img src="../accounts/<?php echo $_SESSION["Picture"];?>" class="img-circle" alt="User Image" style="height: 60px;">
         </div>
         <div class="pull-left info">
           <p><?php  echo $_SESSION["Name"];?></p>
@@ -59,9 +59,6 @@
         <li><a href="javascript:{}" onclick="document.getElementById('optnav').submit();"><i class="fa fa-link"></i><span>Options</span></a></li>
         <li><a href="javascript:{}" onclick="document.getElementById('mailnav').submit();"><i class="fa fa-envelope"></i><span>Mail</span></a></li>
         <li><a href="javascript:{}" onclick="document.getElementById('calnav').submit();"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
-		<li><a href="javascript:{}" onclick="document.getElementById('setnav').submit();"><i class="fa fa-gear"></i><span>Settings</span></a></li>
-		<li><a href="javascript:{}" onclick="document.getElementById('reqnav').submit();"><i class="fa fa-file"></i><span>Request</span></a></li>
-		<li class="header"><?php echo "$opt";?></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

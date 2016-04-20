@@ -68,7 +68,6 @@
 		<li><a href="javascript:{}" onclick="document.getElementById('facnav').submit();"><i class="fa fa-university"></i><span>Faculty</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('stunav').submit();"><i class="fa fa-user"></i><span>Students</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('guestnav').submit();"><i class="fa fa-users"></i><span>Guests</span></a></li>
-		<li><a href="javascript:{}" onclick="document.getElementById('appnav').submit();"><i class="fa fa-folder-open-o"></i><span>Applications</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('subnav').submit();"><i class="fa fa-book"></i><span>Subjects</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('curnav').submit();"><i class="fa fa-file-text-o"></i><span>Curriculum</span></a></li>
 		<li><a href="javascript:{}" onclick="document.getElementById('finnav').submit();"><i class="fa fa-money"></i><span>Finance</span></a></li>

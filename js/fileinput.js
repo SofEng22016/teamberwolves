@@ -315,7 +315,7 @@
         '    <div class="kv-fileinput-error"></div>\n' +
         '    </div>\n' +
         '</div>';
-    tClose = '';
+    tClose = '<div class="close fileinput-remove">&times;</div>\n';
     tIcon = '<span class="glyphicon glyphicon-file kv-caption-icon"></span>';
     tCaption = '<div tabindex="500" class="form-control file-caption {class}">\n' +
         '   <div class="file-caption-name"></div>\n' +
@@ -560,6 +560,9 @@
                         break;
                 }
             });
+            if (isEmpty(self.allowedPreviewTypes)) {
+                self.allowedPreviewTypes = defaultPreviewTypes;
+            }
             self.fileInputCleared = false;
             self.fileBatchCompleted = true;
             if (!self.isPreviewable) {
@@ -2644,7 +2647,7 @@
         overwriteInitial: true,
         layoutTemplates: defaultLayoutTemplates,
         previewTemplates: defaultPreviewTemplates,
-        allowedPreviewTypes: defaultPreviewTypes,
+        allowedPreviewTypes: null,
         allowedPreviewMimeTypes: null,
         allowedFileTypes: null,
         allowedFileExtensions: null,
@@ -2658,7 +2661,7 @@
         previewFileIconSettings: {},
         previewFileExtSettings: {},
         buttonLabelClass: 'hidden-xs',
-        browseIcon: '<i class="fa fa-paperclip"></i>&nbsp;',
+        browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>&nbsp;',
         browseClass: 'btn btn-primary',
         removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
         removeClass: 'btn btn-default',
@@ -2711,7 +2714,7 @@
     $.fn.fileinputLocales.en = {
         fileSingle: 'file',
         filePlural: 'files',
-        browseLabel: 'Attachment',
+        browseLabel: 'Browse &hellip;',
         removeLabel: 'Remove',
         removeTitle: 'Clear selected files',
         cancelLabel: 'Cancel',

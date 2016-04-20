@@ -3,6 +3,7 @@
 <script src="../dist/js/app.min.js"></script>
 <script src="../js/bootstrap-switch.js"></script>
 <script src="../js/bootstrap-select.js"></script>
+<script src="../js/theme.js"></script>
 <script>
 $(function(argument) {
     $('#switch').bootstrapSwitch();
@@ -208,12 +209,7 @@ else if($opt=="Calendar"){?>
         day: 'day'
       },
       //Random default events
-      events: [ {
-		   	title: 'test',
-		   	start: new Date(y,m,20),
-		   	backgroundColor: "green",
-		    borderColor: "green",
-		   },
+      events: [ 
                <?php
             		   $con = mysql_connect("localhost", "root", "");
             		   $db = mysql_select_db("enrollment", $con);
@@ -232,7 +228,7 @@ else if($opt=="Calendar"){?>
             		   <?php } mysql_close($con); ?>
                {
                    title: 'Chinese New Year',
-                   start: new Date(y, m, 8),
+                   start: new Date(y, 1, 8),
                    allDay: false,
                    backgroundColor: "#00c0ef",
                    borderColor: "#00c0ef"
@@ -486,6 +482,9 @@ function searchIns() {
     		$subjectInfo = array(array());
     		$dys = array("","M","T","W","TH","F","S");
     		for($x=0;$x<count($subjects);$x++){
+    			if($subjects[$x]==''){
+    			break;	
+    			}
     			$query = "SELECT * FROM `subject12016` WHERE `SID` = '$subjects[$x]' ";
     			$result = mysql_query($query,$con);
     			$id = "";
@@ -530,6 +529,7 @@ function searchIns() {
 		   	backgroundColor: "green",
 		    borderColor: "green",
 		   },
+		   
            <?php
         		   for($i=0;$i<count($subjectInfo);$i++){
         		   	$startDay = 5;
@@ -543,10 +543,10 @@ function searchIns() {
         		   					if($y%7==$chosenDate&&$y!=0){ ?>
         		   					{
         		               		   	title: '<?php echo $subjectInfo[$i][0];?>',
-        		               		   	start: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][2].",".$subjectInfo[$i][3]?>),
-        		               		   	<?php if($row['End']!=''){?>
-        		   						end: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][4].",".$subjectInfo[$i][3]?>),
-        		               		   	<?php }?>
+        		               		   	start: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][2].",".($subjectInfo[$i][3])?>),
+        		               		   
+        		   						end: new Date(y,<?php echo $x.",".$dayCounter.",".$subjectInfo[$i][4].",".($subjectInfo[$i][3])?>),
+        		               	
         		               		   	backgroundColor: "#00c0ef",
         		               		    borderColor: "#00c0ef",
         		               		   },
@@ -640,6 +640,38 @@ function searchIns() {
       $("#new-event").val("");
     });
   });
+</script>
+
+<?php }elseif ($opt=="Profile"){?>
+
+<script src="../js/fileinput2.js"></script>
+<script>
+$("#confirmEdit").click(function(){
+	var id = "<?php echo $_SESSION["ID"];?>";
+    var fname = $("#fName").val();
+    var mname = $("#mName").val();
+    var lname = $("#lName").val();
+    var country = $("#country").val();
+    var province = $("#province").val();
+    var city = $("#city").val();
+    var street = $("#street").val();
+    var mobile = $("#mobile").val();
+    var email = $("#email").val();
+    $.post("editstudent.php", {
+		id:id,
+		fname:fname,
+		mname:mname,
+		lname:lname,
+		country:country,
+		province:province,
+		city:city,
+		street:street,
+		mobile:mobile,
+		email:email
+	}, function(data) {
+		alert(data);
+	});
+});
 </script>
 <?php }elseif ($opt=="Enrollment"){?>
 
